@@ -30,7 +30,7 @@
       <v-spacer />
       <v-btn depressed>login</v-btn>
     </v-app-bar>
-    <v-main>
+    <v-main class="bk">
       <v-container>
         <nuxt />
       </v-container>
@@ -53,18 +53,23 @@ export default {
         },
         {
           icon: 'mdi-domain',
-          title: 'how to use',
-          to: '/usage',
+          title: 'my page',
+          to: '/mypage',
         },
         {
-          icon: 'mdi-message-text',
-          title: 'why this app exist',
-          to: '/existence',
-        },
-        {
-          icon: 'mdi-chart-bubble',
+          icon: 'mdi-domain',
           title: 'goals',
           to: '/wants',
+        },
+        {
+          icon: 'mdi-domain',
+          title: 'informations',
+          to: '/articles',
+        },
+        {
+          icon: 'mdi-domain',
+          title: 'about',
+          to: '/about',
         },
       ],
       miniVariant: false,
@@ -75,3 +80,9 @@ export default {
   },
 }
 </script>
+<style lang="scss">
+.bk {
+  background-image: url('~static//images/background4greed.jpg');
+  background-size: 100%;
+}
+</style>
