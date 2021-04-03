@@ -82,7 +82,7 @@ export default {
 </script>
 <style lang="scss">
 .bk {
-  background-image: url('~static//images/background4greed.jpg');
-  background-size: 100%;
+  // background-image: url('~static//images/background4greed.jpg');
+  // background-size: 100%;
 }
 </style>
