@@ -44,11 +44,36 @@ export default {
     '@nuxtjs/pwa',
     // https://go.nuxtjs.dev/content
     '@nuxt/content',
+    // https://auth.nuxtjs.org/
+    '@nuxt/auth',
   ],
 
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
   axios: {
     baseURL: 'http://localhost:3000',
+  },
+
+  // Auth module refer to https://qiita.com/nakanishi03/items/b15f9cc1ae49bd984167
+  auth: {
+    redirect: {
+      login: '/',
+      logout: '/',
+      callback: false,
+      home: '/mypage',
+    },
+    strategies: {
+      local: {
+        endpoints: {
+          login: {
+            url: '/api/v1/auth/login',
+            method: 'post',
+            propertyName: 'token',
+          },
+          logout: { url: '/api/v1/auth/logout', method: 'post' },
+          user: false,
+        },
+      },
+    },
   },
 
   // PWA module configuration: https://go.nuxtjs.dev/pwa

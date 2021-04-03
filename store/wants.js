@@ -64,7 +64,8 @@ export const actions = {
     } catch (error) {
       alert('getWants actions error')
       const res = error.response
-      console.log(`error : ${res}`)
+      console.log('getWants actions error:')
+      console.log(res)
     }
   },
 }
