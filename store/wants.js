@@ -49,6 +49,9 @@ export const state = () => {
     ],
   }
 }
+export const getters = {
+  wants: (state) => state.stoWants,
+}
 
 export const mutations = {
   setWants(state, data) {
@@ -60,6 +63,7 @@ export const actions = {
   async getWants({ commit }) {
     try {
       const response = await this.$axios.get('/api/v1/want')
+      console.log(response)
       commit('setWants', response.data)
     } catch (error) {
       alert('getWants actions error')

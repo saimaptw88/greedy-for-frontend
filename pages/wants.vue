@@ -59,9 +59,9 @@
             <!-- モーダルウィンドウを終了 -->
           </v-col>
         </v-row>
-        <v-btn class="done_btn" width="200px" bottom color="primary"
-          >done</v-btn
-        >
+        <v-btn class="done_btn" width="200px" bottom color="primary">
+          done
+        </v-btn>
       </v-card>
     </v-card>
   </v-container>
@@ -76,6 +76,14 @@ export default {
   data() {
     return {
       want: '',
+      wants: {
+        id: '',
+        category_id: '',
+        name: '',
+        priority: '',
+        reachability: '',
+        user: '',
+      },
       modal: false,
       categories: [
         {
@@ -89,69 +97,26 @@ export default {
           collapsed: false,
         },
       ],
-      wants: [
-        {
-          id: 1,
-          name: 'want1',
-          reachability: 100,
-          priority: 1,
-          user: 'saito',
-          category_id: 1,
-        },
-        {
-          id: 2,
-          name: 'want2',
-          reachability: 100,
-          priority: 2,
-          user: 'saito',
-          category_id: 1,
-        },
-        {
-          id: 3,
-          name: 'want3',
-          reachability: 100,
-          priority: 3,
-          user: 'saito',
-          category_id: 1,
-        },
-        {
-          id: 4,
-          name: 'want4',
-          reachability: 100,
-          priority: 4,
-          user: 'saito',
-          category_id: 2,
-        },
-      ],
       form: {
         id: '',
         category_id: '',
         name: '',
-        start_data: '',
-        end_data: '',
-        incharge_user: '',
-        percentage: '',
+        reachability: '',
+        priority: '',
+        user: '',
       },
     }
   },
   computed: {
+    stoWants() {
+      const response = this.$store.state.wants.stoWants
+      this.setWants()
+      return response
+    },
     // wantsをカテゴリーに分類する
     displayCategories() {
-      const categories = []
-      let wants = ''
-      this.categories.map((category) => {
-        wants = this.wants.filter((want) => want.category_id === category.id)
-        categories.push({
-          id: category.id,
-          name: category.name,
-          wants,
-        })
-        return categories
-      })
-      return categories
-    },
-    stoWants() {
-      return this.$store.state.wants.stoWants
+      this.setWants()
+      return this.displayCategory()
     },
   },
   methods: {
@@ -199,26 +164,51 @@ export default {
       Object.assign(this.form, task)
       this.modal = true
     },
-    // ページ遷移時にwantsをストアから読み込む
-    async getWants() {
-      try {
-        await this.$store.dispatch('wants/getWants')
-      } catch (err) {
-        const res = err.response
-        console.log('get wants error :')
-        console.log(res)
-        alert('getWants error')
-      }
-    },
     // モーダルウィンドウでwantを更新する
     wantUpdate() {
       const task = this.tasks.find((task) => task.id === this.form.id)
       Object.assign(task, this.form)
       this.modal = false
     },
+    // storeから得た値をdataに保存する
+    setWants() {
+      const wants = this.$store.getters['wants/wants']
+      this.wants = wants
+      console.log('methods setWants:data()wants')
+      console.log(this.wants)
+    },
+
+    displayCategory() {
+      const categories = []
+      // this.setWants
+      let wants = ''
+      const data = this.wants
+      console.log('conputed log data:')
+      console.log(data)
+      this.categories.map((category) => {
+        wants = data.filter((want) => want.category_id === category.id)
+        categories.push({
+          id: category.id,
+          name: category.name,
+          wants,
+        })
+        return categories
+      })
+      return categories
+    },
   },
-  created() {
-    this.getWants()
+  async created() {
+    try {
+      await this.$store.dispatch('wants/getWants')
+      console.log('created log this.stoWants:')
+      console.log(this.stoWants)
+      // this.setWants()
+    } catch (err) {
+      const res = err.response
+      console.log('created error :')
+      console.log(res)
+    }
+    this.setWants()
   },
 }
 </script>
