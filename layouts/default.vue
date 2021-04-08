@@ -28,7 +28,15 @@
       <v-app-bar-nav-icon @click.stop="drawer = !drawer" />
       <v-toolbar-title v-text="title" />
       <v-spacer />
-      <v-btn depressed>login</v-btn>
+      <!-- error -->
+      <div class="userBtn">
+        <div v-if="logedin">
+          <v-btn depressed @click="logout">logout</v-btn>
+        </div>
+        <div v-else>
+          <v-btn depressed @click="login">login</v-btn>
+        </div>
+      </div>
     </v-app-bar>
     <v-main class="bk">
       <v-container>
@@ -77,6 +85,19 @@ export default {
       rightDrawer: false,
       title: 'GREEDY',
     }
+  },
+  computed: {
+    logedin() {
+      return this.$store.state.user.login
+    },
+  },
+  methods: {
+    login() {
+      window.location.href = '/users/login'
+    },
+    logout() {
+      this.$store.dispatch('user/logout')
+    },
   },
 }
 </script>

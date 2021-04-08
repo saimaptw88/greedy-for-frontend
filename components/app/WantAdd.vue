@@ -1,8 +1,8 @@
 <template>
   <div>
-    <v-btn v-if="!show" @click="showInput" depressed color="#808080"
-      >+add goal</v-btn
-    >
+    <v-btn v-if="!show" @click="showInput" depressed color="#808080">
+      +add goal
+    </v-btn>
     <div v-else>
       <div>
         <v-textarea
