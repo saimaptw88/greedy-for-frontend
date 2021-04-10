@@ -8,6 +8,7 @@
 
         <v-row class="categories-container" justify="center">
           <!-- カテゴリを表示 -->
+
           <v-col
             class="categories"
             v-for="(category, index) in displayCategories"
@@ -15,17 +16,21 @@
           >
             <div class="category-name">{{ category.name }}</div>
             <!-- wantを表示 -->
-            <div
-              class="category-wants"
-              v-for="(want, index) in category.wants"
-              :key="index"
-              draggable="true"
-              @dragstart="dragWant(want)"
-              @dragover="dragOverWant(want)"
-              @click="openModal(category, want)"
+            <draggable
+              group="myGroup"
+              @start="drag = true"
+              @end="drag = false"
+              :options="options"
             >
-              {{ want.name }}
-            </div>
+              <div
+                class="category-wants"
+                v-for="(want, index) in category.wants"
+                :key="index"
+                @click="openModal(category, want)"
+              >
+                {{ want.name }}
+              </div>
+            </draggable>
             <!-- want表示を終了 -->
             <!-- want追加/削除ボタンを表示 -->
             <want-add
@@ -53,13 +58,21 @@
                   v-model="form.name"
                   ><p>{{ form.name }}</p></v-textarea
                 >
+                <!-- 更新ボタン -->
                 <v-btn color="primary" @click="wantUpdate">update</v-btn>
               </div>
             </v-overlay>
             <!-- モーダルウィンドウを終了 -->
           </v-col>
         </v-row>
-        <v-btn class="done_btn" width="200px" bottom color="primary">
+        <!-- ページ更新ボタン -->
+        <v-btn
+          class="done_btn"
+          width="200px"
+          @click="wantsUpdate"
+          bottom
+          color="primary"
+        >
           done
         </v-btn>
       </v-card>
@@ -69,13 +82,20 @@
 
 <script>
 import WantAdd from '@/components/app/WantAdd'
+import draggable from 'vuedraggable'
 export default {
   components: {
     WantAdd,
+    draggable,
   },
   data() {
     return {
-      want: '',
+      // draggableの引数
+      options: {
+        animation: 200,
+        myGroup: 'myGroup',
+      },
+      // storeの値を保存する
       wants: {
         id: '',
         category_id: '',
@@ -85,6 +105,7 @@ export default {
         user: '',
       },
       modal: false,
+      // カテゴリの種類
       categories: [
         {
           id: 1,
@@ -108,8 +129,10 @@ export default {
     }
   },
   computed: {
+    // storeからwantを取得してdataに保存する
     stoWants() {
       const response = this.$store.state.wants.stoWants
+      console.log(response)
       this.setWants()
       return response
     },
@@ -120,71 +143,41 @@ export default {
     },
   },
   methods: {
-    // クリックしたタスクの状態を保存する
-    dragWant(want) {
-      this.want = want
-    },
-    // wantが交差した時にv-forで定義したindex( 並び順 )を交換する
-    dragOverWant(overWant) {
-      // wantが交差したか判断して、交差したなら実行
-      if (overWant.id !== this.want.id) {
-        // 持っているwantのindexを保存するための変数
-        let deleteIndex
-        // 交差したwantのindexを保存するための変数
-        let addIndex
-        // 持っているwant、交差したwantのindexを保存する
-        this.wants.map((want, index) => {
-          // 持っているwantのindexをdelteIndexに保存
-          if (want.id === this.want.id) deleteIndex = index
-          // 交差したwantのindexをaddIndexに保存
-          if (want.id === overWant.id) addIndex = index
-          return 0
-        })
-        // data/wantsからdeleteIndexに指示された要素を削除
-        // 要素数が減り、残りの要素のindexがマイナス1される
-        this.wants.splice(deleteIndex, 1)
-        // wantがカテゴリを移動する際に、交差した別カテゴリwantのcategory_idを上書きする
-        this.want.category_id = overWant.category_id
-        // data/wantsにaddIndexで指示された要素にdata/wantを追加
-        // 追加された要素以降の要素のindexが1足される
-        this.wants.splice(addIndex, 0, this.want)
-      }
-    },
     // wantを追加する
     wantAdd(wantName, categoryId) {
-      this.wants.push({
-        id: Date.now(),
-        category_id: categoryId,
+      console.log('test')
+      this.$store.dispatch('wants/wantCreate', {
         name: wantName,
+        categoryId,
       })
     },
     // モーダルウィンドウを開く
-    openModal(category, task) {
+    openModal(category, want) {
       this.category = category
-      Object.assign(this.form, task)
+      Object.assign(this.form, want)
       this.modal = true
     },
     // モーダルウィンドウでwantを更新する
     wantUpdate() {
-      const task = this.tasks.find((task) => task.id === this.form.id)
-      Object.assign(task, this.form)
+      let want = this.wants.find((want) => want.id === this.form.id)
+      want = Object.assign(want, this.form)
+      this.$store.dispatch('wants/wantUpdate', want)
       this.modal = false
+    },
+    // wantsをページ全体で更新
+    async wantsUpdate() {
+      await this.$store.dispatch('wants/wantsUpdate', this.wants)
     },
     // storeから得た値をdataに保存する
     setWants() {
       const wants = this.$store.getters['wants/wants']
       this.wants = wants
-      console.log('methods setWants:data()wants')
-      console.log(this.wants)
     },
-
+    // wantsをカテゴリごとに分類する
     displayCategory() {
       const categories = []
-      // this.setWants
       let wants = ''
       const data = this.wants
-      console.log('conputed log data:')
-      console.log(data)
       this.categories.map((category) => {
         wants = data.filter((want) => want.category_id === category.id)
         categories.push({
@@ -200,9 +193,6 @@ export default {
   async created() {
     try {
       await this.$store.dispatch('wants/getWants')
-      console.log('created log this.stoWants:')
-      console.log(this.stoWants)
-      // this.setWants()
     } catch (err) {
       const res = err.response
       console.log('created error :')

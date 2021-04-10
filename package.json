@@ -19,6 +19,7 @@
     "core-js": "^3.6.5",
     "js-cookie": "^2.2.1",
     "nuxt": "^2.14.6",
+    "vuedraggable": "^2.24.3",
     "vuex-persistedstate": "^4.0.0-beta.3"
   },
   "devDependencies": {
