@@ -24,11 +24,9 @@ export const mutations = {
 }
 
 export const actions = {
-  // railsからwantsを取得する
   async getWants({ commit }) {
     try {
       const response = await this.$axios.get('/api/v1/want')
-      console.log(response)
       commit('setWants', response.data)
     } catch (error) {
       alert('getWants actions error')
@@ -38,43 +36,50 @@ export const actions = {
     }
   },
 
-  // vue側で更新したwantsを一斉更新したい
-  wantsUpdate({ commit }, wants) {
-    const data = []
-    wants.map((want) => {
-      try {
-        const response = this.$axios.update(`/api/v1/want/${want.id}`, want)
-        data.push(response.data)
-      } catch (err) {
-        const res = err.response
-        console.log('wantsUpdata actions error :')
-        console.log(res)
-      }
-    })
-    commit('setWants', data)
-  },
-
   // wantの更新
   async wantUpdate({ commit }, want) {
     try {
       const response = await this.$axios.patch(`/api/v1/want/${want.id}`, want)
       commit('wantUpdate', response.data)
-      console.log(response.data)
     } catch (err) {
       const res = err.response
       console.log(res)
     }
   },
-  async wantCreate({ commit }, { name, categoryId }) {
+  async wantCreate({ commit }, { name, categoryId, priority }) {
     try {
-      console.log('foo')
-      // strong parameter を突破できない
-      const want = { want: { name: `${name}`, category_id: `${categoryId}` } }
+      const want = {
+        want: {
+          name: `${name}`,
+          category_id: `${categoryId}`,
+          priority: `${priority}`,
+        },
+      }
       const response = await this.$axios.post('/api/v1/want', want)
       console.log(response.data)
       commit('wantAdd', response.data)
     } catch (err) {
       const res = err.response
+      console.log(res)
+    }
+  },
+  async wantDelete({ commit }, wantId) {
+    try {
+      const response = await this.$axios.delete(`/api/v1/want/${wantId}`)
+      commit('setWants', response.data)
+    } catch (err) {
+      const res = err.response
+      console.log('delete error:')
+      console.log(res)
+    }
+  },
+  async updates({ commit }, wants) {
+    try {
+      const response = await this.$axios.patch('/api/v1/updates', wants)
+      commit('setWants', response.data)
+    } catch (err) {
+      const res = err.response
+      console.log('error updates actions :')
       console.log(res)
     }
   },

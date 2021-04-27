@@ -16,21 +16,18 @@
           >
             <div class="category-name">{{ category.name }}</div>
             <!-- wantを表示 -->
-            <draggable
-              group="myGroup"
-              @start="drag = true"
-              @end="drag = false"
-              :options="options"
+            <div
+              class="category-wants"
+              v-for="(want, index) in category.wants"
+              :key="index"
+              @dragstart="dragStart(want)"
+              @dragover="dragOver(want)"
+              @dragend="dragEnd(category)"
+              draggable="true"
+              @click="openModal(category, want)"
             >
-              <div
-                class="category-wants"
-                v-for="(want, index) in category.wants"
-                :key="index"
-                @click="openModal(category, want)"
-              >
-                {{ want.name }}
-              </div>
-            </draggable>
+              {{ want.name }}
+            </div>
             <!-- want表示を終了 -->
             <!-- want追加/削除ボタンを表示 -->
             <want-add
@@ -60,6 +57,8 @@
                 >
                 <!-- 更新ボタン -->
                 <v-btn color="primary" @click="wantUpdate">update</v-btn>
+                <!-- 削除ボタン -->
+                <v-btn color="gray" @click="wantDelete">delete</v-btn>
               </div>
             </v-overlay>
             <!-- モーダルウィンドウを終了 -->
@@ -69,9 +68,9 @@
         <v-btn
           class="done_btn"
           width="200px"
-          @click="wantsUpdate"
           bottom
           color="primary"
+          @click="setGoal"
         >
           done
         </v-btn>
@@ -82,40 +81,24 @@
 
 <script>
 import WantAdd from '@/components/app/WantAdd'
-import draggable from 'vuedraggable'
 export default {
   components: {
     WantAdd,
-    draggable,
   },
   data() {
     return {
-      // draggableの引数
-      options: {
-        animation: 200,
-        myGroup: 'myGroup',
-      },
-      // storeの値を保存する
-      wants: {
-        id: '',
-        category_id: '',
-        name: '',
-        priority: '',
-        reachability: '',
-        user: '',
-      },
+      want: '',
+      wants: [],
       modal: false,
       // カテゴリの種類
       categories: [
         {
           id: 1,
           name: 'your desire',
-          collapsed: false,
         },
         {
           id: 2,
           name: 'goals you have to do',
-          collapsed: false,
         },
       ],
       form: {
@@ -128,53 +111,23 @@ export default {
       },
     }
   },
+  async created() {
+    await this.$store.dispatch('wants/getWants')
+    this.setWants()
+  },
+  mounted() {
+    const parent = document.getElementsByClassName('categories')
+    console.log(parent)
+    for (let i = 0; i < 2; i++) {
+      parent[i].setAttribute('id', i + 1)
+    }
+  },
   computed: {
-    // storeからwantを取得してdataに保存する
     stoWants() {
-      const response = this.$store.state.wants.stoWants
-      console.log(response)
-      this.setWants()
-      return response
+      return this.$store.state.wants.stoWants
     },
     // wantsをカテゴリーに分類する
     displayCategories() {
-      this.setWants()
-      return this.displayCategory()
-    },
-  },
-  methods: {
-    // wantを追加する
-    wantAdd(wantName, categoryId) {
-      console.log('test')
-      this.$store.dispatch('wants/wantCreate', {
-        name: wantName,
-        categoryId,
-      })
-    },
-    // モーダルウィンドウを開く
-    openModal(category, want) {
-      this.category = category
-      Object.assign(this.form, want)
-      this.modal = true
-    },
-    // モーダルウィンドウでwantを更新する
-    wantUpdate() {
-      let want = this.wants.find((want) => want.id === this.form.id)
-      want = Object.assign(want, this.form)
-      this.$store.dispatch('wants/wantUpdate', want)
-      this.modal = false
-    },
-    // wantsをページ全体で更新
-    async wantsUpdate() {
-      await this.$store.dispatch('wants/wantsUpdate', this.wants)
-    },
-    // storeから得た値をdataに保存する
-    setWants() {
-      const wants = this.$store.getters['wants/wants']
-      this.wants = wants
-    },
-    // wantsをカテゴリごとに分類する
-    displayCategory() {
       const categories = []
       let wants = ''
       const data = this.wants
@@ -185,20 +138,153 @@ export default {
           name: category.name,
           wants,
         })
-        return categories
       })
       return categories
     },
   },
-  async created() {
-    try {
-      await this.$store.dispatch('wants/getWants')
-    } catch (err) {
-      const res = err.response
-      console.log('created error :')
-      console.log(res)
-    }
-    this.setWants()
+  methods: {
+    dragStart(want) {
+      this.want = want
+    },
+    dragOver(overWant) {
+      if (overWant.id !== this.want.id) {
+        let startIndex
+        let endIndex
+        this.wants.map((want, index) => {
+          if (want.id === this.want.id) {
+            startIndex = index
+            want.priority = index
+          }
+        })
+        this.wants.map((want, index) => {
+          if (want.id === overWant.id) endIndex = index
+        })
+        this.wants.splice(startIndex, 1)
+        this.want.category_id = overWant.category_id
+        this.wants.splice(endIndex, 0, this.want)
+        console.log('test')
+      }
+    },
+    dragEnd(category) {
+      const parent = document.getElementsByClassName('categories')
+      // console.log(want, category)
+      const want = this.want
+      for (let i = 0; i < 2; i++) {
+        if (
+          parent[i].textContent.includes(`${category.name}\n+ADD GOAL`) ===
+            false &&
+          parent[i].childElementCount === 3
+        ) {
+          if (category.id === 1) {
+            want.category_id = i + 1
+          } else {
+            want.category_id = i
+          }
+          this.wantReUpdate(want)
+        }
+      }
+      console.log(parent[0].id)
+    },
+
+    // wantを追加する
+    wantAdd(wantName, categoryId) {
+      let num = 0
+      const wants = []
+      // this.wantsの中からcategoryIdが同一のwantを抽出
+      this.wants.map((want) => {
+        if (want.category_id === categoryId) {
+          wants.push(want)
+        }
+      })
+      // wantsの中のpriorityの最大値を抽出
+      if (wants.length === 0) {
+        num = 0
+      } else {
+        wants.map((want) => {
+          if (want.priority >= num) {
+            num = want.priority
+          }
+        })
+        num += 1
+      }
+      this.$store.dispatch('wants/wantCreate', {
+        name: wantName,
+        categoryId,
+        priority: num,
+      })
+      location.reload()
+    },
+    // wantを更新(モーダルウィンドウ)
+    wantUpdate() {
+      let want = this.wants.find((want) => want.id === this.form.id)
+      want = Object.assign(want, this.form)
+      this.modal = false
+      this.$store.dispatch('wants/wantUpdate', want)
+    },
+    wantReUpdate(want) {
+      this.$store.dispatch('wants/wantUpdate', want)
+      location.reload()
+    },
+    // wantの削除(モーダルウィンドウ)
+    wantDelete() {
+      const want = this.wants.find((want) => want.id === this.form.id)
+      this.$store.dispatch('wants/wantDelete', want.id)
+      this.modal = false
+      location.reload()
+    },
+    // モーダルウィンドウを開く
+    openModal(category, want) {
+      this.category = category
+      Object.assign(this.form, want)
+      this.modal = true
+    },
+    // storeから得た値をdataに保存する
+    setWants() {
+      let wants = this.stoWants
+      const wants1 = []
+      const wants2 = []
+      wants.map((want) => {
+        if (want.category_id === 1) {
+          wants1.push(want)
+        } else {
+          wants2.push(want)
+        }
+      })
+      wants1.map((want, index) => {
+        want.priority = index
+      })
+      wants2.map((want, index) => {
+        want.priority = index
+      })
+      wants = wants1.concat(wants2)
+      this.wants = wants
+    },
+    async wantsUpdate(wants) {
+      const wants1 = []
+      const wants2 = []
+      wants.map((want) => {
+        if (want.category_id === 1) {
+          wants1.push(want)
+        } else {
+          wants2.push(want)
+        }
+      })
+      wants1.map((want, index) => {
+        want.priority = index
+      })
+      wants2.map((want, index) => {
+        want.priority = index
+      })
+      wants = wants1.concat(wants2)
+      await this.$store.dispatch('wants/updates', wants)
+    },
+    setGoal() {
+      this.$store.dispatch('goal/createGoal')
+      window.location.href = '/mypage'
+    },
+  },
+  async beforeUpdate() {
+    await this.wantsUpdate(this.wants)
   },
 }
 </script>
