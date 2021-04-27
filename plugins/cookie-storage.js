@@ -21,7 +21,7 @@ function filterValues(serializedJsonValue) {
 
 export default ({ store, isDev }) => {
   createPersistedState({
-    key: 'wonderful-editor-frontend',
+    key: 'greedy-for-frontend',
     storage: {
       getItem: (key) => Cookies.get(key),
       setItem: (key, value) =>

@@ -4,8 +4,6 @@ export default function setup({ store }) {
     let headers = {}
     // store.gettersから値を取得
     headers = store.getters['user/headers']
-    console.log('axios.js : store.getters.headers:')
-    console.log(headers)
     if (headers != null) {
       // オブジェクトのプロパティを取り出し、要素ごとに処理を実行する
       Object.keys(headers).forEach(function (key) {

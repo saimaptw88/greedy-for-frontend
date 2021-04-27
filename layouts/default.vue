@@ -71,6 +71,11 @@ export default {
         },
         {
           icon: 'mdi-domain',
+          title: 'daily message',
+          to: '/daily/message',
+        },
+        {
+          icon: 'mdi-domain',
           title: 'informations',
           to: '/articles',
         },
