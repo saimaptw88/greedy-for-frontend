@@ -35,7 +35,6 @@ export const actions = {
     } catch (err) {
       const res = err.response
       console.log(res)
-      alert('getGoal actions error')
     }
   },
   async updateGoal({ commit }, goal) {
@@ -45,7 +44,6 @@ export const actions = {
     } catch (err) {
       const res = err.response
       console.log(res)
-      alert('updateGoal actions error')
     }
   },
 }

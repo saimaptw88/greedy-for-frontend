@@ -7,22 +7,42 @@
       fixed
       app
     >
-      <v-list>
-        <v-list-item
-          v-for="(item, i) in items"
-          :key="i"
-          :to="item.to"
-          router
-          exact
-        >
-          <v-list-item-action>
-            <v-icon>{{ item.icon }}</v-icon>
-          </v-list-item-action>
-          <v-list-item-content>
-            <v-list-item-title v-text="item.title" />
-          </v-list-item-content>
-        </v-list-item>
-      </v-list>
+      <div v-if="logedin">
+        <v-list>
+          <v-list-item
+            v-for="(item, i) in logedinItems"
+            :key="i"
+            :to="item.to"
+            router
+            exact
+          >
+            <v-list-item-action>
+              <v-icon>{{ item.icon }}</v-icon>
+            </v-list-item-action>
+            <v-list-item-content>
+              <v-list-item-title v-text="item.title" />
+            </v-list-item-content>
+          </v-list-item>
+        </v-list>
+      </div>
+      <div v-else>
+        <v-list>
+          <v-list-item
+            v-for="(item, i) in items"
+            :key="i"
+            :to="item.to"
+            router
+            exact
+          >
+            <v-list-item-action>
+              <v-icon>{{ item.icon }}</v-icon>
+            </v-list-item-action>
+            <v-list-item-content>
+              <v-list-item-title v-text="item.title" />
+            </v-list-item-content>
+          </v-list-item>
+        </v-list>
+      </div>
     </v-navigation-drawer>
     <v-app-bar :clipped-left="clipped" fixed app>
       <v-app-bar-nav-icon @click.stop="drawer = !drawer" />
@@ -61,6 +81,23 @@ export default {
         },
         {
           icon: 'mdi-domain',
+          title: 'informations',
+          to: '/informations',
+        },
+        {
+          icon: 'mdi-domain',
+          title: 'about',
+          to: '/about',
+        },
+      ],
+      logedinItems: [
+        {
+          icon: 'mdi-domain',
+          title: 'home',
+          to: '/',
+        },
+        {
+          icon: 'mdi-domain',
           title: 'my page',
           to: '/mypage',
         },
@@ -77,7 +114,7 @@ export default {
         {
           icon: 'mdi-domain',
           title: 'informations',
-          to: '/articles',
+          to: '/informations',
         },
         {
           icon: 'mdi-domain',
@@ -88,7 +125,7 @@ export default {
       miniVariant: false,
       right: true,
       rightDrawer: false,
-      title: 'GREEDY',
+      title: 'Amaimon',
     }
   },
   computed: {

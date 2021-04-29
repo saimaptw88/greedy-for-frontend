@@ -85,6 +85,7 @@ export default {
   components: {
     WantAdd,
   },
+  middleware: ['before_auth'],
   data() {
     return {
       want: '',
