@@ -29,6 +29,7 @@
 
 <script>
 export default {
+  middleware: ['after_auth'],
   name: 'App',
   auth: false,
   data() {

@@ -2,7 +2,7 @@
   <div>
     <v-card>
       <v-card>
-        <v-card-title>YOUR VISION</v-card-title>
+        <v-card-title>YOUR DESIRE</v-card-title>
         <v-text-field
           label="Vision I realy desire to achive"
           single-line
@@ -18,7 +18,7 @@
         >
       </v-card>
       <v-card>
-        <v-card-title>why?</v-card-title>
+        <v-card-title>Why you achive the DESIRE?</v-card-title>
         <v-text-field
           label="Why you want to achive this vision?"
           single-line
@@ -34,7 +34,7 @@
         >
       </v-card>
       <v-card>
-        <v-card-title>my everday task</v-card-title>
+        <v-card-title>Your everday task</v-card-title>
         <v-text-field
           label="What do you nead to do everyday to achive this vision?"
           single-line
@@ -55,6 +55,7 @@
 
 <script>
 export default {
+  middleware: ['before_auth', 'before_set_goal'],
   data() {
     return {
       goal: {
@@ -78,12 +79,17 @@ export default {
   },
   async beforeupdated() {
     await this.updateGoal(this.goal)
+    location.reload()
   },
   updated() {
     this.setGoal()
   },
   beforeDestroy() {
-    this.updateGoal(this.goal)
+    if (this.stoGoal === '') {
+      window.location.href = '/wants'
+    } else {
+      this.updateGoal(this.goal)
+    }
   },
   methods: {
     async getGoal() {
@@ -94,8 +100,8 @@ export default {
     },
     updateGoal(goal) {
       console.log('test')
-      location.reload()
       this.$store.dispatch('goal/updateGoal', goal)
+      location.reload()
     },
   },
 }
