@@ -1,2 +1,2 @@
-web: npm generate
-web: npm start
+web: yarn generate
+web: yarn start
