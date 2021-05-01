@@ -81,15 +81,11 @@ export default {
     await this.updateGoal(this.goal)
     location.reload()
   },
-  updated() {
-    this.setGoal()
+  async updated() {
+    await this.setGoal()
   },
   beforeDestroy() {
-    if (this.stoGoal === '') {
-      window.location.href = '/wants'
-    } else {
-      this.updateGoal(this.goal)
-    }
+    this.updateGoal(this.goal)
   },
   methods: {
     async getGoal() {
@@ -98,9 +94,8 @@ export default {
     setGoal() {
       this.goal = this.stoGoal
     },
-    updateGoal(goal) {
-      console.log('test')
-      this.$store.dispatch('goal/updateGoal', goal)
+    async updateGoal(goal) {
+      await this.$store.dispatch('goal/updateGoal', goal)
       location.reload()
     },
   },

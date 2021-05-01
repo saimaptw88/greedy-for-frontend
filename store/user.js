@@ -45,6 +45,7 @@ export const actions = {
   },
 
   async login({ commit }, user) {
+    console.log('test')
     try {
       const response = await this.$axios.post('/auth/sign_in', user)
       const headers = response.headers
