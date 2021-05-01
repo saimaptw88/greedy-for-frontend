@@ -279,8 +279,8 @@ export default {
       wants = wants1.concat(wants2)
       await this.$store.dispatch('wants/updates', wants)
     },
-    setGoal() {
-      this.$store.dispatch('goal/createGoal')
+    async setGoal() {
+      await this.$store.dispatch('goal/createGoal')
       window.location.href = '/mypage'
     },
   },
