@@ -35,7 +35,7 @@ export const actions = {
       }
 
       commit('login', loginInfoHeaders)
-      window.location.href = '/'
+      window.location.href = '/index'
     } catch (err) {
       const res = err.response
       console.log('sign up actions error:')
@@ -45,7 +45,6 @@ export const actions = {
   },
 
   async login({ commit }, user) {
-    console.log('test')
     try {
       const response = await this.$axios.post('/auth/sign_in', user)
       const headers = response.headers
@@ -59,7 +58,7 @@ export const actions = {
       console.log('loginInfoHeaders:')
       console.log(loginInfoHeaders)
       commit('login', loginInfoHeaders)
-      window.location.href = '/'
+      window.location.href = '/index'
     } catch (err) {
       const res = err.response
       console.log('login actions error:')
@@ -71,10 +70,10 @@ export const actions = {
   async logout({ commit }) {
     try {
       // commit('logout')
-      // window.location.href = '/'
+      // window.location.href = '/index'
       await this.$axios.delete('/auth/sign_out')
       commit('logout')
-      window.location.href = '/'
+      window.location.href = '/index'
     } catch (err) {
       const res = err.response
       console.log('logout actions error:')
