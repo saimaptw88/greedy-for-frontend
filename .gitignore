@@ -90,5 +90,5 @@ sw.*
 *.swp
 
 # 追加分
-node_modules/
-.nuxt/
+# node_modules/
+# .nuxt/
