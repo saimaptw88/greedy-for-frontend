@@ -27,6 +27,7 @@
             ※感想やアドバイス、問題点があったらご意見をいただけると幸いです。どうぞ宜しくお願いします。
           </p>
         </v-card-text>
+        <v-btn @click="logoutError">logout</v-btn>
       </v-card>
       <v-card class="usage">
         <v-card-title>USAGE</v-card-title>
@@ -58,6 +59,9 @@ export default {
   methods: {
     login() {
       window.location.href = '/users/login'
+    },
+    logoutError() {
+      this.$store.state.user.login = false
     },
   },
 }
