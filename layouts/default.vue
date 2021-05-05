@@ -138,6 +138,7 @@ export default {
       window.location.href = '/users/login'
     },
     logout() {
+      this.$store.state.user.login = false
       this.$store.dispatch('user/logout')
     },
   },
