@@ -73,7 +73,7 @@ export const actions = {
       // window.location.href = '/'
       await this.$axios.delete('/auth/sign_out')
       commit('logout')
-      this.$router.push('../')
+      window.location.href = '../'
     } catch (err) {
       const res = err.response
       console.log('logout actions error:')

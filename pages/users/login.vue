@@ -20,7 +20,6 @@
             <v-btn class="white--text" width="100px" @click="redirectSignup">
               sign up
             </v-btn>
-            <NuxtLink to="../"> Home page </NuxtLink>
           </v-card-actions>
         </v-form>
       </v-card-text>
@@ -45,7 +44,6 @@ export default {
     // loginメソッドの呼び出し
     async loginWithAuthModule() {
       await this.$store.dispatch('user/login', this.user)
-      this.$router.push('../')
     },
     redirectSignup() {
       window.location.href = '/users/signup'
