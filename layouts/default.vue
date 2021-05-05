@@ -50,7 +50,6 @@
       <v-spacer />
       <!-- error -->
       <div class="userBtn">
-        <v-btn @click="logoutError">logout</v-btn>
         <div v-if="logedin">
           <v-btn depressed @click="logout">logout</v-btn>
         </div>
