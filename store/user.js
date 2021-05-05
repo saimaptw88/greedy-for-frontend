@@ -13,11 +13,13 @@ export const mutations = {
   login(state, data) {
     state.headers = data
     state.login = true
+    window.location.href = '/'
   },
 
   logout(state) {
     state.login = false
-    state.headers = null
+    state.headers = ''
+    window.location.href = '/'
   },
 }
 // await this.$store.dispatch('user/login', this.user)
