@@ -50,6 +50,7 @@
       <v-spacer />
       <!-- error -->
       <div class="userBtn">
+        <v-btn @click="logoutError">logout</v-btn>
         <div v-if="logedin">
           <v-btn depressed @click="logout">logout</v-btn>
         </div>
@@ -138,8 +139,10 @@ export default {
       window.location.href = '/users/login'
     },
     logout() {
-      this.$store.state.user.login = false
       this.$store.dispatch('user/logout')
+    },
+    logoutError() {
+      this.$store.state.user.login != this.$store.state.user.login
     },
   },
 }
