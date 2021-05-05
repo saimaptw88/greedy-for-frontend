@@ -20,7 +20,7 @@
             <v-btn class="white--text" width="100px" @click="redirectSignup">
               sign up
             </v-btn>
-            <NuxtLink to="../index"> Home page </NuxtLink>
+            <NuxtLink to="../"> Home page </NuxtLink>
           </v-card-actions>
         </v-form>
       </v-card-text>

@@ -67,8 +67,8 @@ export const actions = {
 
   async logout({ commit }) {
     try {
-      commit('logout')
-      window.location.href = '/'
+      // commit('logout')
+      // window.location.href = '/'
       await this.$axios.delete('/auth/sign_out')
       commit('logout')
       this.$router.push('/')
