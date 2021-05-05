@@ -13,7 +13,6 @@ export const mutations = {
   login(state, data) {
     state.headers = data
     state.login = true
-    window.location.href = '/'
   },
 
   logout(state) {
@@ -72,7 +71,6 @@ export const actions = {
       // window.location.href = '/index'
       await this.$axios.delete('/auth/sign_out')
       commit('logout')
-      window.location.href = '/'
     } catch (err) {
       const res = err.response
       console.log('logout actions error:')
