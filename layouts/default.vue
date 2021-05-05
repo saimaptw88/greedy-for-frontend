@@ -134,13 +134,22 @@ export default {
     logedin() {
       return this.$store.state.user.login
     },
+    headers() {
+      return this.$store.state.user.headers
+    },
   },
   methods: {
     login() {
       window.location.href = '/users/login'
     },
     logout() {
-      this.$store.dispatch('user/logout')
+      const headers = this.headers
+      const login = this.logedin
+      if (headers.cache - control === 'no-cache' && login) {
+        this.$store.state.user.login = false
+      } else {
+        this.$store.dispatch('user/logout')
+      }
     },
     logoutError() {
       this.$store.state.user.login = false
