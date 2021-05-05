@@ -18,6 +18,7 @@ export const mutations = {
   logout(state) {
     state.login = false
     state.headers = ''
+    window.location.href = '../index'
   },
 }
 // await this.$store.dispatch('user/login', this.user)
