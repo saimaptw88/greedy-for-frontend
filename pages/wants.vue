@@ -115,6 +115,10 @@ export default {
   async created() {
     await this.$store.dispatch('wants/getWants')
     this.setWants()
+    await this.$store.dispatch('goal/getGoal')
+  },
+  async beforeUpdate() {
+    await this.wantsUpdate(this.wants)
   },
   mounted() {
     const parent = document.getElementsByClassName('categories')
@@ -123,9 +127,26 @@ export default {
       parent[i].setAttribute('id', i + 1)
     }
   },
+  async beforeDestroy() {
+    let goal = this.stoGoal
+    const wants = this.wants
+    if (goal === null) {
+      await this.$store.dispatch('goal/createGoal')
+    } else {
+      await wants.map((want) => {
+        if (want.category_id === 1 && want.priority === 0) {
+          goal = want
+        }
+      })
+      await this.$store.dispatch('goal/updateGoal', goal)
+    }
+  },
   computed: {
     stoWants() {
       return this.$store.state.wants.stoWants
+    },
+    stoGoal() {
+      return this.$store.state.goal.stoGoal
     },
     // wantsをカテゴリーに分類する
     displayCategories() {
@@ -283,9 +304,6 @@ export default {
       await this.$store.dispatch('goal/createGoal')
       window.location.href = '/mypage'
     },
-  },
-  async beforeUpdate() {
-    await this.wantsUpdate(this.wants)
   },
 }
 </script>

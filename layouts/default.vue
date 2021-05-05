@@ -23,6 +23,7 @@
               <v-list-item-title v-text="item.title" />
             </v-list-item-content>
           </v-list-item>
+          <v-btn @click="logoutError">logout</v-btn>
         </v-list>
       </div>
       <div v-else>
@@ -142,7 +143,7 @@ export default {
       this.$store.dispatch('user/logout')
     },
     logoutError() {
-      this.$store.state.user.login != this.$store.state.user.login
+      this.$store.state.user.login = false
     },
   },
 }
