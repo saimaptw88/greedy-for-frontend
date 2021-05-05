@@ -44,7 +44,7 @@ export default {
     // loginメソッドの呼び出し
     async loginWithAuthModule() {
       await this.$store.dispatch('user/login', this.user)
-      window.location.href = '/'
+      window.location.href = '../'
     },
     redirectSignup() {
       window.location.href = '/users/signup'
