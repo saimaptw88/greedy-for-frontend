@@ -19,7 +19,6 @@ export const mutations = {
   logout(state) {
     state.login = false
     state.headers = ''
-    window.location.href = '/'
   },
 }
 // await this.$store.dispatch('user/login', this.user)
@@ -37,7 +36,6 @@ export const actions = {
       }
 
       commit('login', loginInfoHeaders)
-      window.location.href = '/'
     } catch (err) {
       const res = err.response
       console.log('sign up actions error:')
@@ -60,7 +58,6 @@ export const actions = {
       console.log('loginInfoHeaders:')
       console.log(loginInfoHeaders)
       commit('login', loginInfoHeaders)
-      window.location.href = '/'
     } catch (err) {
       const res = err.response
       console.log('login actions error:')
