@@ -41,6 +41,7 @@ export default {
   methods: {
     registerUser() {
       this.$store.dispatch('user/signup', this.user)
+      this.$router.push('/')
     },
   },
 }
