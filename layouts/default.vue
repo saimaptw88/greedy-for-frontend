@@ -141,9 +141,12 @@ export default {
       window.location.href = '/users/login'
     },
     logout() {
-      const headers = this.headers
-      const login = this.logedin
-      if (headers.cache - control === 'no-cache' && login) {
+      const headers = this.$store.getters['user/headers']
+      const login = this.$store.getters['user/login']
+      console.log(headers)
+      console.log(login)
+      // this.$store.dispatch('user/logout')
+      if (headers === '' && login) {
         this.$store.state.user.login = false
       } else {
         this.$store.dispatch('user/logout')

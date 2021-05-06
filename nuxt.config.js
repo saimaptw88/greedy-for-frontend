@@ -50,8 +50,8 @@ export default {
 
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
   axios: {
-    // baseURL: ['http://localhost:3000'],
-    baseURL: ['https://ameimon.herokuapp.com'],
+    baseURL: ['http://localhost:3000'],
+    // baseURL: ['https://ameimon.herokuapp.com'],
   },
 
   // Auth module refer to https://qiita.com/nakanishi03/items/b15f9cc1ae49bd984167
