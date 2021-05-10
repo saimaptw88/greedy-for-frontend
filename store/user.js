@@ -1,3 +1,5 @@
+// import { resetAutoDestroyState } from '@vue/test-utils'
+
 export const state = () => {
   return {
     headers: {},
@@ -81,5 +83,9 @@ export const actions = {
       console.log(res)
       alert('error logout actions')
     }
+  },
+
+  reset({ commit }) {
+    commit('logout')
   },
 }

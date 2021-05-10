@@ -23,6 +23,7 @@
               <v-list-item-title v-text="item.title" />
             </v-list-item-content>
           </v-list-item>
+          <v-btn @click="reset">reset</v-btn>
         </v-list>
       </div>
       <div v-else>
@@ -151,6 +152,9 @@ export default {
       } else {
         this.$store.dispatch('user/logout')
       }
+    },
+    reset() {
+      this.$store.dispatch('user/reset')
     },
   },
 }
