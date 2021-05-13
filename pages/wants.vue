@@ -70,7 +70,7 @@
           width="200px"
           bottom
           color="primary"
-          @click="setGoal"
+          @click="wantsUpdate"
         >
           done
         </v-btn>
