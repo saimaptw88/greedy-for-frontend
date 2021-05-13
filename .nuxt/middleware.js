@@ -6,7 +6,7 @@ middleware['after_auth'] = middleware['after_auth'].default || middleware['after
 middleware['before_auth'] = require('../middleware/before_auth.js')
 middleware['before_auth'] = middleware['before_auth'].default || middleware['before_auth']
 
-middleware['before_set_goal'] = require('../middleware/before_set_goal.js')
-middleware['before_set_goal'] = middleware['before_set_goal'].default || middleware['before_set_goal']
+middleware['before_set_want'] = require('../middleware/before_set_want.js')
+middleware['before_set_want'] = middleware['before_set_want'].default || middleware['before_set_want']
 
 export default middleware

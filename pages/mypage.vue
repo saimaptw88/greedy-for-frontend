@@ -7,15 +7,8 @@
           label="Vision I realy desire to achive"
           single-line
           outlined
-          v-model="goal.name"
+          v-model="want.name"
         ></v-text-field>
-        <v-btn
-          depressed
-          class="updateBtn"
-          color="primary"
-          @click="updateGoal(this.goal)"
-          >update vision</v-btn
-        >
       </v-card>
       <v-card>
         <v-card-title>Why you achive the DESIRE?</v-card-title>
@@ -23,13 +16,13 @@
           label="Why you want to achive this vision?"
           single-line
           outlined
-          v-model="goal.why"
+          v-model="want.why"
         ></v-text-field>
         <v-btn
           depressed
           class="updateBtn"
           color="primary"
-          @click="updateGoal(this.goal)"
+          @click="updateGoal(this.want)"
           >update reson</v-btn
         >
       </v-card>
@@ -39,13 +32,13 @@
           label="What do you nead to do everyday to achive this vision?"
           single-line
           outlined
-          v-model="goal.every_day_task"
+          v-model="want.every_day_task"
         ></v-text-field>
         <v-btn
           depressed
           class="updateBtn"
           color="primary"
-          @click="updateGoal(this.goal)"
+          @click="updateGoal(this.want)"
           >update task</v-btn
         >
       </v-card>
@@ -55,48 +48,54 @@
 
 <script>
 export default {
-  middleware: ['before_auth', 'before_set_goal'],
+  middleware: ['before_auth', 'before_set_want'],
   data() {
     return {
-      goal: {
-        name: '',
-        priority: '',
-        category_id: '',
-        why: '',
-        reachability: '',
-        every_day_task: '',
-      },
+      want: '',
+      wants: [],
     }
   },
   computed: {
-    stoGoal() {
-      return this.$store.state.goal.stoGoal
+    stoWants() {
+      return this.$store.state.wants.stoWants
+    },
+    stoWant() {
+      return this.$store.state.wants.stoWant
     },
   },
   async created() {
-    await this.getGoal()
-    this.setGoal()
+    await this.getWants()
+    await this.getWant()
+    this.setWants()
+    this.setWant()
   },
-  async beforeupdated() {
-    await this.updateGoal(this.goal)
-    location.reload()
-  },
-  async updated() {
-    await this.setGoal()
-  },
+  // beforeUpdate() {
+  //   this.updateWant(this.want)
+  // },
   beforeDestroy() {
-    this.updateGoal(this.goal)
+    this.updateWant(this.want)
   },
   methods: {
-    async getGoal() {
-      await this.$store.dispatch('goal/getGoal')
+    async getWants() {
+      await this.$store.dispatch('wants/getWants')
     },
-    setGoal() {
-      this.goal = this.stoGoal
+    setWants() {
+      this.wants = this.stoWants
     },
-    async updateGoal(goal) {
-      await this.$store.dispatch('goal/updateGoal', goal)
-      location.reload()
+    async getWant() {
+      let want = ''
+      this.stoWants.map((i) => {
+        if (i.category_id === 1 && i.priority === 0) {
+          want = i
+        }
+      })
+      await this.$store.dispatch('wants/getWant', want)
+    },
+    setWant() {
+      this.want = this.stoWant
+    },
+    async updateWant(want) {
+      await this.$store.dispatch('wants/wantUpdate', want)
     },
   },
 }

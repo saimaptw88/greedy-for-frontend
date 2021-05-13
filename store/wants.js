@@ -1,6 +1,7 @@
 export const state = () => {
   return {
     stoWants: [],
+    stoWant: [],
   }
 }
 export const getters = {
@@ -20,6 +21,9 @@ export const mutations = {
         want = data
       }
     })
+  },
+  setWant(state, data) {
+    state.stoWant = data
   },
 }
 
@@ -80,6 +84,16 @@ export const actions = {
     } catch (err) {
       const res = err.response
       console.log('error updates actions :')
+      console.log(res)
+    }
+  },
+  async getWant({ commit }, want) {
+    try {
+      const response = await this.$axios.get(`/api/v1/want/${want.id}`)
+      commit('setWant', response.data)
+    } catch (err) {
+      const res = err.response
+      console.log('Actions error : getWamt')
       console.log(res)
     }
   },
