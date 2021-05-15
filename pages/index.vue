@@ -26,7 +26,6 @@
           <p>
             ※感想やアドバイス、問題点があったらご意見をいただけると幸いです。どうぞ宜しくお願いします。
           </p>
-          <v-btn color="primary" @click="logoutError">logout</v-btn>
         </v-card-text>
       </v-card>
       <v-card class="usage">
@@ -48,7 +47,7 @@
           <p>
             ④最後にmypageでgoalを達成したい理由、そのための毎日のタスクを登録してください
           </p>
-          <v-btn color="primary" @click="login">Start Amaimon</v-btn>
+          <v-btn color="primary" @click="login">Start</v-btn>
         </v-card-text>
       </v-card>
     </v-card>
@@ -56,12 +55,18 @@
 </template>
 <script>
 export default {
+  computed: {
+    stoLogin() {
+      return this.$store.state.user.login
+    },
+  },
   methods: {
     login() {
-      window.location.href = '/users/login'
-    },
-    logoutError() {
-      this.$store.state.user.login = false
+      if (this.stoLogin) {
+        window.location.href = '/wants'
+      } else {
+        window.location.href = '/users/login'
+      }
     },
   },
 }

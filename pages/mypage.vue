@@ -18,15 +18,8 @@
           outlined
           v-model="want.why"
         ></v-text-field>
-        <v-btn
-          depressed
-          class="updateBtn"
-          color="primary"
-          @click="updateGoal(this.want)"
-          >update reson</v-btn
-        >
       </v-card>
-      <v-card>
+      <v-card class="everyday-task">
         <v-card-title>Your everday task</v-card-title>
         <v-text-field
           label="What do you nead to do everyday to achive this vision?"
@@ -37,9 +30,11 @@
         <v-btn
           depressed
           class="updateBtn"
+          id="updateBtn"
+          bottom
           color="primary"
-          @click="updateGoal(this.want)"
-          >update task</v-btn
+          @click="done"
+          >update</v-btn
         >
       </v-card>
     </v-card>
@@ -69,11 +64,11 @@ export default {
     this.setWants()
     this.setWant()
   },
-  // beforeUpdate() {
-  //   this.updateWant(this.want)
-  // },
+  beforeUpdate() {
+    this.updateWant()
+  },
   beforeDestroy() {
-    this.updateWant(this.want)
+    this.updateWant()
   },
   methods: {
     async getWants() {
@@ -94,9 +89,22 @@ export default {
     setWant() {
       this.want = this.stoWant
     },
-    async updateWant(want) {
-      await this.$store.dispatch('wants/wantUpdate', want)
+    updateWant() {
+      this.$store.dispatch('wants/wantUpdate', this.want)
+    },
+    async done() {
+      await this.updateWant()
+      location.reload()
     },
   },
 }
 </script>
+<style lang="scss">
+.everyday-task {
+  text-align: center;
+  margin: 10px;
+  .updateBtn {
+    margin-bottom: 20px;
+  }
+}
+</style>

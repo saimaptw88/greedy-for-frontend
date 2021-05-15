@@ -12,15 +12,15 @@ export const mutations = {
   setWants(state, data) {
     state.stoWants = data
   },
-  wantAdd(state, data) {
-    state.stoWants.push(data)
-  },
-  wantUpdate(state, data) {
+  setUpdatedWant(state, data) {
     state.stoWants.map((want) => {
       if (want.id === data.id) {
         want = data
       }
     })
+  },
+  wantAdd(state, data) {
+    state.stoWants.push(data)
   },
   setWant(state, data) {
     state.stoWant = data
@@ -44,7 +44,7 @@ export const actions = {
   async wantUpdate({ commit }, want) {
     try {
       const response = await this.$axios.patch(`/api/v1/want/${want.id}`, want)
-      commit('wantUpdate', response.data)
+      commit('setUpdatedWant', response.data)
     } catch (err) {
       const res = err.response
       console.log(res)
@@ -77,7 +77,7 @@ export const actions = {
       console.log(res)
     }
   },
-  async updates({ commit }, wants) {
+  async wantsUpdate({ commit }, wants) {
     try {
       const response = await this.$axios.patch('/api/v1/updates', wants)
       commit('setWants', response.data)
