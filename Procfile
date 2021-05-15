@@ -1,2 +1,2 @@
-web: yarn run generate
+web: yarn generate
 web: yarn start
