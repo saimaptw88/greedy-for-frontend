@@ -13,16 +13,17 @@
             class="categories"
             v-for="(category, index) in displayCategories"
             :key="index"
+            @drop="drop(event)"
           >
             <div class="category-name">{{ category.name }}</div>
             <!-- wantを表示 -->
             <div
               class="category-wants"
+              id="drop_field"
               v-for="(want, index) in category.wants"
               :key="index"
               @dragstart="dragStart(want)"
               @dragover="dragOver(want)"
-              @dragend="dragEnd(category)"
               draggable="true"
               @click="openModal(category, want)"
             >
@@ -65,15 +66,16 @@
           </v-col>
         </v-row>
         <!-- ページ更新ボタン -->
-        <v-btn
-          class="done_btn"
-          width="200px"
-          bottom
-          color="primary"
-          @click="wantsUpdate"
+        <nuxt-link to="/mypage">
+          <v-btn
+            class="done_btn"
+            width="200px"
+            bottom
+            color="primary"
+            @click="done"
+            >done
+          </v-btn></nuxt-link
         >
-          done
-        </v-btn>
       </v-card>
     </v-card>
   </v-container>
@@ -126,6 +128,9 @@ export default {
       parent[i].setAttribute('id', i + 1)
     }
   },
+  async beforeDestroy() {
+    await this.wantsUpdate()
+  },
   computed: {
     stoWants() {
       return this.$store.state.wants.stoWants
@@ -169,30 +174,9 @@ export default {
         this.wants.splice(startIndex, 1)
         this.want.category_id = overWant.category_id
         this.wants.splice(endIndex, 0, this.want)
-        console.log('test')
+        // console.log('test')
       }
     },
-    dragEnd(category) {
-      const parent = document.getElementsByClassName('categories')
-      // console.log(want, category)
-      const want = this.want
-      for (let i = 0; i < 2; i++) {
-        if (
-          parent[i].textContent.includes(`${category.name}\n+ADD GOAL`) ===
-            false &&
-          parent[i].childElementCount === 3
-        ) {
-          if (category.id === 1) {
-            want.category_id = i + 1
-          } else {
-            want.category_id = i
-          }
-          this.wantReUpdate(want)
-        }
-      }
-      console.log(parent[0].id)
-    },
-
     // wantを追加する
     wantAdd(wantName, categoryId) {
       let num = 0
@@ -266,7 +250,8 @@ export default {
       wants = wants1.concat(wants2)
       this.wants = wants
     },
-    async wantsUpdate(wants) {
+    async wantsUpdate() {
+      let wants = this.wants
       const wants1 = []
       const wants2 = []
       wants.map((want) => {
@@ -283,11 +268,11 @@ export default {
         want.priority = index
       })
       wants = wants1.concat(wants2)
-      await this.$store.dispatch('wants/updates', wants)
+      await this.$store.dispatch('wants/wantsUpdate', wants)
     },
-    async setGoal() {
-      await this.$store.dispatch('goal/createGoal')
-      window.location.href = '/mypage'
+    done() {
+      // this.wantsUpdate()
+      // window.location.href = '/mypage'
     },
   },
 }
