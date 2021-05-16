@@ -118,16 +118,16 @@ export default {
     await this.$store.dispatch('wants/getWants')
     this.setWants()
   },
-  async beforeUpdate() {
-    await this.wantsUpdate(this.wants)
-  },
-  mounted() {
-    const parent = document.getElementsByClassName('categories')
-    console.log(parent)
-    for (let i = 0; i < 2; i++) {
-      parent[i].setAttribute('id', i + 1)
-    }
-  },
+  // async beforeUpdate() {
+  //   await this.wantsUpdate(this.wants)
+  // },
+  // mounted() {
+  //   const parent = document.getElementsByClassName('categories')
+  //   console.log(parent)
+  //   for (let i = 0; i < 2; i++) {
+  //     parent[i].setAttribute('id', i + 1)
+  //   }
+  // },
   async beforeDestroy() {
     await this.wantsUpdate()
   },
