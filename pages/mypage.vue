@@ -2,27 +2,27 @@
   <div>
     <v-card>
       <v-card>
-        <v-card-title>YOUR DESIRE</v-card-title>
+        <v-card-title>熱望する目標</v-card-title>
         <v-text-field
-          label="Vision I realy desire to achive"
+          label="私がどうしても達成したい願望"
           single-line
           outlined
           v-model="want.name"
         ></v-text-field>
       </v-card>
       <v-card>
-        <v-card-title>Why you achive the DESIRE?</v-card-title>
+        <v-card-title>熱望を達成したい理由</v-card-title>
         <v-text-field
-          label="Why you want to achive this vision?"
+          label="この熱望を達成したいのはなぜ？（メリット、デメリット、期間など）"
           single-line
           outlined
           v-model="want.why"
         ></v-text-field>
       </v-card>
       <v-card class="everyday-task">
-        <v-card-title>Your everday task</v-card-title>
+        <v-card-title>熱望を達成するための毎日のタスク</v-card-title>
         <v-text-field
-          label="What do you nead to do everyday to achive this vision?"
+          label="熱望を達成するために、毎日何をするのが良さそうですか?"
           single-line
           outlined
           v-model="want.every_day_task"
@@ -34,7 +34,7 @@
           bottom
           color="primary"
           @click="done"
-          >update</v-btn
+          >更新</v-btn
         >
       </v-card>
     </v-card>
@@ -105,6 +105,7 @@ export default {
   margin: 10px;
   .updateBtn {
     margin-bottom: 20px;
+    min-width: 200px;
   }
 }
 </style>
