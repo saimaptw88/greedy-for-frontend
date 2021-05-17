@@ -1,7 +1,7 @@
 <template>
   <div>
     <v-btn v-if="!show" @click="showInput" depressed color="#808080">
-      +add goal
+      +新規目標
     </v-btn>
     <div v-else>
       <div>
@@ -15,8 +15,8 @@
         ></v-textarea>
       </div>
       <div>
-        <v-btn @click="addWant">add</v-btn>
-        <v-btn @click="closeInput">delete</v-btn>
+        <v-btn @click="addWant">追加</v-btn>
+        <v-btn @click="closeInput">削除</v-btn>
       </div>
     </div>
   </div>

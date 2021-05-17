@@ -81,7 +81,7 @@ export default {
         },
         {
           icon: 'mdi-domain',
-          title: 'informations',
+          title: 'infomations',
           to: '/informations',
         },
         {
@@ -103,7 +103,7 @@ export default {
         },
         {
           icon: 'mdi-domain',
-          title: 'goals',
+          title: 'find my goal',
           to: '/wants',
         },
         {
@@ -125,7 +125,7 @@ export default {
       miniVariant: false,
       right: true,
       rightDrawer: false,
-      title: 'Amaimon',
+      title: '目標設定の達人',
     }
   },
   computed: {

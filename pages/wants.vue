@@ -1,10 +1,12 @@
 <template>
   <v-container>
     <v-card class="main-container">
-      <v-card-title>WHAT DO YOU WANT TO BE OR ACHIVE? </v-card-title>
-      <v-card-subtitle>RIGHT DOWN YOUR GOALS</v-card-subtitle>
+      <v-card-title>私が達成したい目標は?</v-card-title>
+      <v-card-subtitle
+        >達成したい目標を全て書き出してみましょう。新しく目標を追加するときは＋新規目標から追加してみてください。追加後はドラッグ・アンド・ドロップで移動できます</v-card-subtitle
+      >
       <v-card class="sab-conteiner">
-        <v-card-title>YOUR GOALS</v-card-title>
+        <v-card-title>目標設定ツール</v-card-title>
 
         <v-row class="categories-container" justify="center">
           <!-- カテゴリを表示 -->
@@ -57,9 +59,9 @@
                   ><p>{{ form.name }}</p></v-textarea
                 >
                 <!-- 更新ボタン -->
-                <v-btn color="primary" @click="wantUpdate">update</v-btn>
+                <v-btn color="primary" @click="wantUpdate">更新</v-btn>
                 <!-- 削除ボタン -->
-                <v-btn color="gray" @click="wantDelete">delete</v-btn>
+                <v-btn color="gray" @click="wantDelete">削除</v-btn>
               </div>
             </v-overlay>
             <!-- モーダルウィンドウを終了 -->
@@ -73,7 +75,7 @@
             bottom
             color="primary"
             @click="done"
-            >done
+            >保存
           </v-btn></nuxt-link
         >
       </v-card>
@@ -97,11 +99,11 @@ export default {
       categories: [
         {
           id: 1,
-          name: 'your desire',
+          name: '私が熱望すること',
         },
         {
           id: 2,
-          name: 'goals you have to do',
+          name: 'なんとなく達成したい目標',
         },
       ],
       form: {
@@ -118,9 +120,9 @@ export default {
     await this.$store.dispatch('wants/getWants')
     this.setWants()
   },
-  // async beforeUpdate() {
-  //   await this.wantsUpdate(this.wants)
-  // },
+  async beforeUpdate() {
+    await this.wantsUpdate(this.wants)
+  },
   // mounted() {
   //   const parent = document.getElementsByClassName('categories')
   //   console.log(parent)
