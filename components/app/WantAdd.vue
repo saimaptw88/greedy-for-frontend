@@ -1,6 +1,12 @@
 <template>
   <div>
-    <v-btn v-if="!show" @click="showInput" depressed color="#808080">
+    <v-btn
+      v-if="!show"
+      @click="showInput"
+      class="white--text"
+      depressed
+      color="#2de9ed"
+    >
       +新規目標
     </v-btn>
     <div v-else>
@@ -48,3 +54,8 @@ export default {
   },
 }
 </script>
+<style lang="scss">
+.add-btn {
+  color: #36dbde;
+}
+</style>

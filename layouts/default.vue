@@ -1,10 +1,12 @@
 <template>
-  <v-app dark>
+  <v-app dark class="bk">
     <v-navigation-drawer
       v-model="drawer"
       :mini-variant="miniVariant"
       :clipped="clipped"
       fixed
+      color="#00b5b2"
+      dark
       app
     >
       <div v-if="logedin">
@@ -44,22 +46,43 @@
         </v-list>
       </div>
     </v-navigation-drawer>
-    <v-app-bar :clipped-left="clipped" fixed app>
+    <v-app-bar
+      :clipped-left="clipped"
+      fixed
+      app
+      class="app-bar"
+      dark
+      color="#00c6c6"
+    >
       <v-app-bar-nav-icon @click.stop="drawer = !drawer" />
-      <v-toolbar-title v-text="title" />
+      <v-toolbar-title class="white--text" @click="goHome" v-text="title" />
       <v-spacer />
       <!-- error -->
       <div class="userBtn">
         <div v-if="logedin">
-          <v-btn depressed @click="logout">logout</v-btn>
+          <v-btn
+            depressed
+            @click="logout"
+            class="white--text"
+            id="logout"
+            color="#00c6c6"
+            >logout</v-btn
+          >
         </div>
         <div v-else>
-          <v-btn depressed @click="login">login</v-btn>
+          <v-btn
+            depressed
+            @click="login"
+            class="white--text"
+            id="login"
+            color="#00c6c6"
+            >login</v-btn
+          >
         </div>
       </div>
     </v-app-bar>
     <v-main class="bk">
-      <v-container>
+      <v-container class="bk">
         <nuxt />
       </v-container>
     </v-main>
@@ -82,7 +105,7 @@ export default {
         {
           icon: 'mdi-domain',
           title: 'infomations',
-          to: '/informations',
+          to: '/infomations',
         },
         {
           icon: 'mdi-domain',
@@ -113,8 +136,8 @@ export default {
         },
         {
           icon: 'mdi-domain',
-          title: 'informations',
-          to: '/informations',
+          title: 'infomations',
+          to: '/infomations',
         },
         {
           icon: 'mdi-domain',
@@ -125,7 +148,7 @@ export default {
       miniVariant: false,
       right: true,
       rightDrawer: false,
-      title: '目標設定の達人',
+      title: 'My Desire',
     }
   },
   computed: {
@@ -152,6 +175,20 @@ export default {
         this.$store.dispatch('user/logout')
       }
     },
+    goHome() {
+      window.location.href = '/'
+    },
   },
 }
 </script>
+<style lang="scss">
+.bk {
+  background-color: #abdcd9;
+}
+.app-bar {
+  color: '00d8db';
+}
+.white--text {
+  cursor: pointer;
+}
+</style>

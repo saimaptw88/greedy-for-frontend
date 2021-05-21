@@ -6,18 +6,24 @@
       </v-card-title>
       <v-card-text>
         <v-form ref="form" lazy-validation>
-          <v-text-field solo v-model="user.email" label="email" />
-          <v-text-field solo v-model="user.password" label="password" />
+          <v-text-field v-model="user.email" label="email" />
+          <v-text-field v-model="user.password" label="password" />
           <v-card-actions>
             <v-btn
-              color="primary"
+              color="#36dbde"
               class="white--text"
               width="100px"
               @click="loginWithAuthModule"
             >
               login
             </v-btn>
-            <v-btn class="white--text" width="100px" @click="redirectSignup">
+            <v-btn
+              class="white--text"
+              color="#777676"
+              width="100px"
+              @mouseover="changeColor"
+              @click="redirectSignup"
+            >
               sign up
             </v-btn>
           </v-card-actions>
@@ -48,6 +54,7 @@ export default {
     redirectSignup() {
       window.location.href = '/users/signup'
     },
+    changeColor() {},
   },
 }
 </script>

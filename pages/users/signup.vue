@@ -6,10 +6,9 @@
       </v-card-title>
       <v-card-text>
         <v-form ref="form" lazy-validation>
-          <v-text-field solo v-model="user.email" label="email" />
-          <v-text-field solo v-model="user.password" label="password" />
+          <v-text-field v-model="user.email" label="email" />
+          <v-text-field v-model="user.password" label="password" />
           <v-text-field
-            solo
             v-model="user.password_confirmation"
             label="check password"
           />
