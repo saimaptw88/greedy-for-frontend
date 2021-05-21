@@ -1,43 +1,58 @@
 <template>
   <div>
-    <v-card>
-      <v-card>
-        <v-card-title>熱望する目標</v-card-title>
+    <v-row class="main-card" justify="center">
+      <v-card hover class="items">
+        <v-card-title class="item-title">熱望する目標</v-card-title>
+        <v-card-text>
+          熱望する目標は、find my
+          goalのページで設定したやり遂げたい目標で優先度が最も高いものです。<br />
+        </v-card-text>
         <v-text-field
           label="私がどうしても達成したい願望"
           single-line
           outlined
           v-model="want.name"
+          class="text-field"
         ></v-text-field>
       </v-card>
-      <v-card>
-        <v-card-title>熱望を達成したい理由</v-card-title>
-        <v-text-field
-          label="この熱望を達成したいのはなぜ？（メリット、デメリット、期間など）"
-          single-line
+      <v-card hover class="items">
+        <v-card-title class="item-title">熱望を達成したい理由</v-card-title>
+        <v-card-text>
+          なぜこの目標を達成したいのか？達成した時の気持ちやメリットを書いて、モチベーションを高めましょう。
+        </v-card-text>
+        <v-textarea
+          class="text-field"
+          name="input-7-4"
           outlined
+          label="私がどうしても達成したい願望"
           v-model="want.why"
-        ></v-text-field>
+        ></v-textarea>
       </v-card>
-      <v-card class="everyday-task">
-        <v-card-title>熱望を達成するための毎日のタスク</v-card-title>
+      <v-card hover class="items">
+        <v-card-title class="item-title">
+          熱望を達成するための毎日のタスク
+        </v-card-title>
+        <v-card-text>
+          目標を達成するには毎日の積み重ねが大事です。毎日15分でできるタスクを設定しましょう。
+        </v-card-text>
         <v-text-field
           label="熱望を達成するために、毎日何をするのが良さそうですか?"
           single-line
           outlined
           v-model="want.every_day_task"
+          class="text-field"
         ></v-text-field>
-        <v-btn
-          depressed
-          class="updateBtn"
-          id="updateBtn"
-          bottom
-          color="primary"
-          @click="done"
-          >更新</v-btn
-        >
       </v-card>
-    </v-card>
+      <v-btn
+        depressed
+        class="updateBtn"
+        id="updateBtn"
+        bottom
+        color="primary"
+        @click="done"
+        >更新</v-btn
+      >
+    </v-row>
   </div>
 </template>
 
@@ -100,12 +115,23 @@ export default {
 }
 </script>
 <style lang="scss">
-.everyday-task {
+.main-card {
+  width: 85%;
+  margin: 100px auto 0;
   text-align: center;
-  margin: 10px;
+  .items {
+    margin-top: 10px;
+    margin-bottom: 15px;
+    .item-title {
+    }
+    .text-field {
+      margin: 0 auto;
+      width: 90%;
+    }
+  }
   .updateBtn {
-    margin-bottom: 20px;
-    min-width: 200px;
+    margin: 20px;
+    width: 200px;
   }
 }
 </style>

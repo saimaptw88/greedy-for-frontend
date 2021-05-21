@@ -5,7 +5,7 @@
       <v-card-subtitle
         >達成したい目標を全て書き出してみましょう。新しく目標を追加するときは＋新規目標から追加してみてください。追加後はドラッグ・アンド・ドロップで移動できます</v-card-subtitle
       >
-      <v-card class="sab-conteiner">
+      <div class="sab-conteiner">
         <v-card-title>目標設定ツール</v-card-title>
 
         <v-row class="categories-container" justify="center">
@@ -78,7 +78,7 @@
             >保存
           </v-btn></nuxt-link
         >
-      </v-card>
+      </div>
     </v-card>
   </v-container>
 </template>
@@ -99,11 +99,11 @@ export default {
       categories: [
         {
           id: 1,
-          name: '私が熱望すること',
+          name: 'やり遂げたい目標',
         },
         {
           id: 2,
-          name: 'なんとなく達成したい目標',
+          name: 'なんとなくの目標',
         },
       ],
       form: {
@@ -282,6 +282,9 @@ export default {
 
 <style lang="scss">
 .main-container {
+  margin: 100px auto 0;
+  width: 85%;
+  min-height: 550px;
   position: relative;
   .modal_base {
     display: flex;
@@ -313,7 +316,7 @@ export default {
         text-align: left;
         float: left;
         margin: 2%;
-        background-color: gray;
+        background-color: #d6f2f0;
         min-width: 200px;
         min-height: 150px;
         .category-name {
@@ -323,10 +326,8 @@ export default {
         .category-wants {
           margin: 2px;
           padding: 1px 5px;
-          border: solid 1px white;
-        }
-        .add-btn {
-          margin: 0 auto;
+          background-color: white;
+          border: solid 1px #2de9ed;
         }
       }
     }

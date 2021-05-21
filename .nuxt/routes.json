@@ -3,54 +3,63 @@
     "name": "about",
     "path": "/about",
     "component": "/Users/saito/git/greedy-for-frontend/pages/about.vue",
-    "chunkName": "pages/about"
+    "chunkName": "pages/about",
+    "_name": "_09f5aa10"
   },
   {
-    "name": "informations",
-    "path": "/informations",
-    "component": "/Users/saito/git/greedy-for-frontend/pages/informations.vue",
-    "chunkName": "pages/informations"
+    "name": "infomations",
+    "path": "/infomations",
+    "component": "/Users/saito/git/greedy-for-frontend/pages/infomations.vue",
+    "chunkName": "pages/infomations",
+    "_name": "_20eb0f88"
   },
   {
     "name": "mypage",
     "path": "/mypage",
     "component": "/Users/saito/git/greedy-for-frontend/pages/mypage.vue",
-    "chunkName": "pages/mypage"
+    "chunkName": "pages/mypage",
+    "_name": "_5dd35e60"
   },
   {
     "name": "users",
     "path": "/users",
     "component": "/Users/saito/git/greedy-for-frontend/pages/users/index.vue",
-    "chunkName": "pages/users/index"
+    "chunkName": "pages/users/index",
+    "_name": "_039a6436"
   },
   {
     "name": "wants",
     "path": "/wants",
     "component": "/Users/saito/git/greedy-for-frontend/pages/wants.vue",
-    "chunkName": "pages/wants"
+    "chunkName": "pages/wants",
+    "_name": "_1a5c5cce"
   },
   {
     "name": "daily-message",
     "path": "/daily/message",
     "component": "/Users/saito/git/greedy-for-frontend/pages/daily/message.vue",
-    "chunkName": "pages/daily/message"
+    "chunkName": "pages/daily/message",
+    "_name": "_85a7d708"
   },
   {
     "name": "users-login",
     "path": "/users/login",
     "component": "/Users/saito/git/greedy-for-frontend/pages/users/login.vue",
-    "chunkName": "pages/users/login"
+    "chunkName": "pages/users/login",
+    "_name": "_657bf166"
   },
   {
     "name": "users-signup",
     "path": "/users/signup",
     "component": "/Users/saito/git/greedy-for-frontend/pages/users/signup.vue",
-    "chunkName": "pages/users/signup"
+    "chunkName": "pages/users/signup",
+    "_name": "_2758cf64"
   },
   {
     "name": "index",
     "path": "/",
     "component": "/Users/saito/git/greedy-for-frontend/pages/index.vue",
-    "chunkName": "pages/index"
+    "chunkName": "pages/index",
+    "_name": "_1abd05bd"
   }
 ]
