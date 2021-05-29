@@ -1,16 +1,16 @@
 <template>
   <v-row>
     <v-card class="main-content">
-      <v-card-title>私が達成したい目標</v-card-title>
+      <v-card-title>私が達成したい目的</v-card-title>
       <v-card-text
-        >達成したい目標を全て書き出してみましょう。<br />
-        新しく目標を追加するときは＋新規目標から追加してみてください。<br />
+        >達成したい目的を全て書き出してみましょう。<br />
+        新しく目的を追加するときは＋追加から追加してみてください。<br />
         追加後はドラッグ＆ドロップで移動できます。</v-card-text
       >
-      <v-card-title>目標設定ツール</v-card-title>
+      <v-card-title>目的設定ツール</v-card-title>
       <v-col class="category-container">
         <div class="category" id="category1">
-          <p>やり遂げたい目標</p>
+          <p>やり遂げたい目的</p>
           <draggable group="task" :list="wantsCategory1">
             <div
               class="item"
@@ -70,6 +70,9 @@
           <want2Add :categoryId="2" @wantAdded="wantAdd"></want2Add>
         </div>
       </v-col>
+      <v-btn bottom color="primary" width="60%" class="done-btn" to="/mypage">
+        完了</v-btn
+      >
     </v-card>
   </v-row>
 </template>
@@ -181,7 +184,7 @@ export default {
       const wants = wants1.concat(wants2)
       await this.$store.dispatch('wants/wantsUpdate', wants)
     },
-    wantAdd(wantName, categoryId) {
+    async wantAdd(wantName, categoryId) {
       let num = 0
       const want = this.form
 
@@ -212,7 +215,7 @@ export default {
       want.priority = num
       want.category_id = categoryId
 
-      this.$store.dispatch('wants/wantCreate', {
+      await this.$store.dispatch('wants/wantCreate', {
         name: wantName,
         categoryId,
         priority: num,
@@ -223,6 +226,7 @@ export default {
       } else {
         this.wantsCategory2.push(want)
       }
+      this.form = ''
     },
   },
 }
@@ -250,6 +254,10 @@ export default {
         margin-top: 10px;
       }
     }
+  }
+  text-align: center;
+  .done-btn {
+    margin: 10px auto;
   }
 }
 </style>

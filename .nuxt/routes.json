@@ -21,13 +21,6 @@
     "_name": "_5dd35e60"
   },
   {
-    "name": "users",
-    "path": "/users",
-    "component": "/Users/saito/git/greedy-for-frontend/pages/users/index.vue",
-    "chunkName": "pages/users/index",
-    "_name": "_039a6436"
-  },
-  {
     "name": "wants",
     "path": "/wants",
     "component": "/Users/saito/git/greedy-for-frontend/pages/wants.vue",

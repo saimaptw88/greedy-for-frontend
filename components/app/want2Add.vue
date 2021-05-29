@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="add-btn" v-if="!show" @click="showInput">
-      <span class="add-btn-text">追加</span>
+      <span class="add-btn-text">＋追加</span>
     </div>
     <!-- <v-btn class="add-btn" v-if="!show" @click="showInput">追加</v-btn> -->
     <div class="add-btn" v-else>
@@ -16,7 +16,7 @@
         </v-textarea>
       </div>
       <v-btn class="btn" color="primary" @click="addWant">追加</v-btn>
-      <v-btn class="btn" color="gray" @click="closeInput">キャンセル</v-btn>
+      <v-btn class="btn" color="gray" @click="closeInput">×</v-btn>
     </div>
   </div>
 </template>
@@ -38,14 +38,13 @@ export default {
       this.form = ''
     },
     addWant() {
-      if (this.wantName !== '') {
+      if (this.form !== '') {
         this.$emit('wantAdded', this.form, this.categoryId)
         this.show = false
-        this.wantName = ''
+        this.form = ''
       } else {
         alert('追加する目標を入力してください')
       }
-      console.log('test')
     },
   },
 }

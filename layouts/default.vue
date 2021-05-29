@@ -148,7 +148,7 @@ export default {
       miniVariant: false,
       right: true,
       rightDrawer: false,
-      title: 'My Desire',
+      title: 'My Desire For Engineers β',
     }
   },
   computed: {
