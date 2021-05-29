@@ -15,6 +15,7 @@ import { createStore } from './store.js'
 
 import nuxt_plugin_plugin_77793eab from 'nuxt_plugin_plugin_77793eab' // Source: ./components/plugin.js (mode: 'all')
 import nuxt_plugin_plugin_58c105ba from 'nuxt_plugin_plugin_58c105ba' // Source: ./vuetify/plugin.js (mode: 'all')
+import nuxt_plugin_googlegtag_3c01e7a0 from 'nuxt_plugin_googlegtag_3c01e7a0' // Source: ./google-gtag.js (mode: 'client')
 import nuxt_plugin_pluginclient_d8d486b2 from 'nuxt_plugin_pluginclient_d8d486b2' // Source: ./content/plugin.client.js (mode: 'client')
 import nuxt_plugin_pluginserver_0d61a3a2 from 'nuxt_plugin_pluginserver_0d61a3a2' // Source: ./content/plugin.server.js (mode: 'server')
 import nuxt_plugin_workbox_7500bb1d from 'nuxt_plugin_workbox_7500bb1d' // Source: ./workbox.js (mode: 'client')
@@ -80,7 +81,7 @@ async function createApp(ssrContext, config = {}) {
   // here we inject the router and store to all child components,
   // making them available everywhere as `this.$router` and `this.$store`.
   const app = {
-    head: {"titleTemplate":"%s - greedy-for-frontend","title":"greedy-for-frontend","meta":[{"charset":"utf-8"},{"name":"viewport","content":"width=device-width, initial-scale=1"},{"hid":"description","name":"description","content":""},{"hid":"charset","charset":"utf-8"},{"hid":"mobile-web-app-capable","name":"mobile-web-app-capable","content":"yes"},{"hid":"apple-mobile-web-app-title","name":"apple-mobile-web-app-title","content":"nuxt-sample"},{"hid":"og:type","name":"og:type","property":"og:type","content":"website"},{"hid":"og:title","name":"og:title","property":"og:title","content":"nuxt-sample"},{"hid":"og:site_name","name":"og:site_name","property":"og:site_name","content":"nuxt-sample"},{"hid":"og:description","name":"og:description","property":"og:description","content":"## Build Setup"}],"link":[{"rel":"icon","type":"image\u002Fx-icon","href":"\u002Ffavicon.ico"},{"rel":"stylesheet","type":"text\u002Fcss","href":"https:\u002F\u002Ffonts.googleapis.com\u002Fcss?family=Roboto:100,300,400,500,700,900&display=swap"},{"rel":"stylesheet","type":"text\u002Fcss","href":"https:\u002F\u002Fcdn.jsdelivr.net\u002Fnpm\u002F@mdi\u002Ffont@latest\u002Fcss\u002Fmaterialdesignicons.min.css"},{"rel":"shortcut icon","href":"\u002F_nuxt\u002Ficons\u002Ficon_64x64.5f6a36.png"},{"rel":"apple-touch-icon","href":"\u002F_nuxt\u002Ficons\u002Ficon_512x512.5f6a36.png","sizes":"512x512"},{"rel":"manifest","href":"\u002F_nuxt\u002Fmanifest.9fe1065e.json","hid":"manifest"},{"rel":"shortcut icon","href":"\u002F_nuxt\u002Ficons\u002Ficon_64x64.5f6a36.png"},{"rel":"apple-touch-icon","href":"\u002F_nuxt\u002Ficons\u002Ficon_512x512.5f6a36.png","sizes":"512x512"}],"style":[],"script":[],"htmlAttrs":{"lang":"en"}},
+    head: {"titleTemplate":"%s - greedy-for-frontend","title":"greedy-for-frontend","meta":[{"charset":"utf-8"},{"name":"viewport","content":"width=device-width, initial-scale=1"},{"hid":"description","name":"description","content":""}],"link":[{"rel":"icon","type":"image\u002Fx-icon","href":"\u002Ffavicon.ico"},{"rel":"stylesheet","type":"text\u002Fcss","href":"https:\u002F\u002Ffonts.googleapis.com\u002Fcss?family=Roboto:100,300,400,500,700,900&display=swap"},{"rel":"stylesheet","type":"text\u002Fcss","href":"https:\u002F\u002Fcdn.jsdelivr.net\u002Fnpm\u002F@mdi\u002Ffont@latest\u002Fcss\u002Fmaterialdesignicons.min.css"}],"style":[],"script":[{"src":"https:\u002F\u002Fwww.googletagmanager.com\u002Fgtag\u002Fjs?id=G-TB2VLG02LP","async":true}]},
 
     store,
     router,
@@ -215,6 +216,10 @@ async function createApp(ssrContext, config = {}) {
 
   if (typeof nuxt_plugin_plugin_58c105ba === 'function') {
     await nuxt_plugin_plugin_58c105ba(app.context, inject)
+  }
+
+  if (process.client && typeof nuxt_plugin_googlegtag_3c01e7a0 === 'function') {
+    await nuxt_plugin_googlegtag_3c01e7a0(app.context, inject)
   }
 
   if (process.client && typeof nuxt_plugin_pluginclient_d8d486b2 === 'function') {
