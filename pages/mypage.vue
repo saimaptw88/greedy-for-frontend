@@ -2,10 +2,9 @@
   <div>
     <v-row class="main-card" justify="center">
       <v-card hover class="items">
-        <v-card-title class="item-title">熱望する目標</v-card-title>
+        <v-card-title class="item-title">達成したい目的</v-card-title>
         <v-card-text>
-          熱望する目標は、find my
-          goalのページで設定したやり遂げたい目標で優先度が最も高いものです。<br />
+          達成したい目的は、やり遂げたい目標で優先度が最も高いものです。<br />この目的を達成することが最も重要で、最大限集中して取り組みましょう。
         </v-card-text>
         <v-text-field
           label="私がどうしても達成したい願望"
@@ -16,9 +15,9 @@
         ></v-text-field>
       </v-card>
       <v-card hover class="items">
-        <v-card-title class="item-title">熱望を達成したい理由</v-card-title>
+        <v-card-title class="item-title">目的を達成する理由</v-card-title>
         <v-card-text>
-          なぜこの目標を達成したいのか？達成した時の気持ちやメリットを書いて、モチベーションを高めましょう。
+          なぜこの目標を達成したいのか？<br />プログラミング学習はエラーの連続でモチベーションを保つのが大変です。<br />ここで学習を続ける理由を書き出し、モチベーションが保てなくなった時に見返しましょう。
         </v-card-text>
         <v-textarea
           class="text-field"
@@ -30,13 +29,13 @@
       </v-card>
       <v-card hover class="items">
         <v-card-title class="item-title">
-          熱望を達成するための毎日のタスク
+          目的達成のための毎日のタスク
         </v-card-title>
         <v-card-text>
-          目標を達成するには毎日の積み重ねが大事です。毎日15分でできるタスクを設定しましょう。
+          毎日簡単に達成できるタスクを設定しましょう。毎日15分でできるタスクを設定しましょう。
         </v-card-text>
         <v-text-field
-          label="熱望を達成するために、毎日何をするのが良さそうですか?"
+          label="毎日15分続けるタスク"
           single-line
           outlined
           v-model="want.every_day_task"

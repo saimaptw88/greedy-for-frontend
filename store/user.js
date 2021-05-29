@@ -38,7 +38,7 @@ export const actions = {
       }
 
       commit('login', loginInfoHeaders)
-      window.location.href = '/'
+      window.location.href = '/wants'
     } catch (err) {
       const res = err.response
       console.log('sign up actions error:')
@@ -61,7 +61,7 @@ export const actions = {
       console.log('loginInfoHeaders:')
       console.log(loginInfoHeaders)
       commit('login', loginInfoHeaders)
-      window.location.href = '/'
+      window.location.href = '/mypage'
     } catch (err) {
       const res = err.response
       console.log('login actions error:')
@@ -72,8 +72,8 @@ export const actions = {
 
   async logout({ commit }) {
     try {
-      commit('logout')
-      window.location.href = '/'
+      // commit('logout')
+      // window.location.href = '/'
       await this.$axios.delete('/auth/sign_out')
       commit('logout')
       window.location.href = '/'
