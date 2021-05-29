@@ -1,111 +1,91 @@
 <template>
-  <v-container>
-    <v-card class="main-container">
-      <v-card-title>私が達成したい目標は?</v-card-title>
-      <v-card-subtitle
-        >達成したい目標を全て書き出してみましょう。新しく目標を追加するときは＋新規目標から追加してみてください。追加後はドラッグ・アンド・ドロップで移動できます</v-card-subtitle
+  <v-row>
+    <v-card class="main-content">
+      <v-card-title>私が達成したい目標</v-card-title>
+      <v-card-text
+        >達成したい目標を全て書き出してみましょう。<br />
+        新しく目標を追加するときは＋新規目標から追加してみてください。<br />
+        追加後はドラッグ＆ドロップで移動できます。</v-card-text
       >
-      <div class="sab-conteiner">
-        <v-card-title>目標設定ツール</v-card-title>
-
-        <v-row class="categories-container" justify="center">
-          <!-- カテゴリを表示 -->
-
-          <v-col
-            class="categories"
-            v-for="(category, index) in displayCategories"
-            :key="index"
-            @drop="drop(event)"
-          >
-            <div class="category-name">{{ category.name }}</div>
-            <!-- wantを表示 -->
+      <v-card-title>目標設定ツール</v-card-title>
+      <v-col class="category-container">
+        <div class="category" id="category1">
+          <p>やり遂げたい目標</p>
+          <draggable group="task" :list="wantsCategory1">
             <div
-              class="category-wants"
-              id="drop_field"
-              v-for="(want, index) in category.wants"
-              :key="index"
-              @dragstart="dragStart(want)"
-              @dragover="dragOver(want)"
-              draggable="true"
-              @click="openModal(category, want)"
+              class="item"
+              v-for="item in wantsCategory1"
+              :key="item.no"
+              @click="openModal(item)"
             >
-              {{ want.name }}
+              {{ item.name }}
             </div>
-            <!-- want表示を終了 -->
-            <!-- want追加/削除ボタンを表示 -->
-            <want-add
-              @wantAdded="wantAdd"
-              :category_id="category.id"
-            ></want-add>
-            <!-- モーダルウィンドウの表示 -->
-            <v-overlay v-show="modal">
-              <div class="modal_base" v-show="modal">
-                <div
-                  class="modal_overlay"
-                  v-show="modal"
-                  @click="modal = false"
-                ></div>
-              </div>
-              <div class="modal_content">
-                <v-textarea
-                  light
-                  color="primary"
-                  background-color="white"
-                  auto-grow
-                  outlined
-                  rows="1"
-                  row-height="3"
-                  v-model="form.name"
-                  ><p>{{ form.name }}</p></v-textarea
-                >
-                <!-- 更新ボタン -->
-                <v-btn color="primary" @click="wantUpdate">更新</v-btn>
-                <!-- 削除ボタン -->
-                <v-btn color="gray" @click="wantDelete">削除</v-btn>
-              </div>
-            </v-overlay>
-            <!-- モーダルウィンドウを終了 -->
-          </v-col>
-        </v-row>
-        <!-- ページ更新ボタン -->
-        <nuxt-link to="/mypage">
-          <v-btn
-            class="done_btn"
-            width="200px"
-            bottom
-            color="primary"
-            @click="done"
-            >保存
-          </v-btn></nuxt-link
-        >
-      </div>
+          </draggable>
+          <Modal v-if="modal" @close-modal="closeModal">
+            <v-textarea
+              v-model="form.name"
+              color="primary"
+              auto-grow
+              outlined
+              rows="2"
+              row-height="4"
+              ><p>{{ form.name }}</p></v-textarea
+            >
+            <v-btn color="#48ebef" @click="wantUpdate">更新</v-btn>
+            <v-btn color="#f1a0f7" @click="wantDelete">削除</v-btn>
+          </Modal>
+          <want2Add :categoryId="1" @wantAdded="wantAdd"></want2Add>
+        </div>
+      </v-col>
+      <v-col class="category-container">
+        <div class="category" id="category2">
+          <p>なんとなくの目標</p>
+          <draggable
+            v-model="wantsCategory2"
+            group="task"
+            :list="wantsCategory2"
+          >
+            <div
+              class="item"
+              v-for="item in wantsCategory2"
+              :key="item.no"
+              @click="openModal(item)"
+            >
+              {{ item.name }}
+            </div>
+          </draggable>
+          <Modal v-if="modal" @close-modal="closeModal">
+            <v-textarea
+              v-model="form.name"
+              color="primary"
+              auto-grow
+              outlined
+              rows="2"
+              row-height="4"
+              ><p>{{ form.name }}</p></v-textarea
+            >
+            <v-btn color="#48ebef" @click="wantUpdate">更新</v-btn>
+            <v-btn color="#f1a0f7" @click="wantDelete">削除</v-btn>
+          </Modal>
+          <want2Add :categoryId="2" @wantAdded="wantAdd"></want2Add>
+        </div>
+      </v-col>
     </v-card>
-  </v-container>
+  </v-row>
 </template>
-
 <script>
-import WantAdd from '@/components/app/WantAdd'
+import draggable from 'vuedraggable'
+import Modal from '@/components/app/Modal'
+import want2Add from '@/components/app/want2Add'
 export default {
   components: {
-    WantAdd,
+    draggable,
+    Modal,
+    want2Add,
   },
-  middleware: ['before_auth'],
   data() {
     return {
-      want: '',
-      wants: [],
       modal: false,
-      // カテゴリの種類
-      categories: [
-        {
-          id: 1,
-          name: 'やり遂げたい目標',
-        },
-        {
-          id: 2,
-          name: 'なんとなくの目標',
-        },
-      ],
       form: {
         id: '',
         category_id: '',
@@ -114,221 +94,160 @@ export default {
         priority: '',
         user: '',
       },
+      wantsCategory1: [],
+      wantsCategory2: [],
     }
+  },
+  computed: {
+    stoWants() {
+      return this.$store.state.wants.stoWants
+    },
   },
   async created() {
     await this.$store.dispatch('wants/getWants')
     this.setWants()
   },
   async beforeUpdate() {
-    await this.wantsUpdate(this.wants)
+    await this.wantsUpdate()
   },
-  // mounted() {
-  //   const parent = document.getElementsByClassName('categories')
-  //   console.log(parent)
-  //   for (let i = 0; i < 2; i++) {
-  //     parent[i].setAttribute('id', i + 1)
-  //   }
-  // },
   async beforeDestroy() {
     await this.wantsUpdate()
   },
-  computed: {
-    stoWants() {
-      return this.$store.state.wants.stoWants
-    },
-    stoGoal() {
-      return this.$store.state.goal.stoGoal
-    },
-    // wantsをカテゴリーに分類する
-    displayCategories() {
-      const categories = []
-      let wants = ''
-      const data = this.wants
-      this.categories.map((category) => {
-        wants = data.filter((want) => want.category_id === category.id)
-        categories.push({
-          id: category.id,
-          name: category.name,
-          wants,
-        })
-      })
-      return categories
-    },
-  },
   methods: {
-    dragStart(want) {
-      this.want = want
-    },
-    dragOver(overWant) {
-      if (overWant.id !== this.want.id) {
-        let startIndex
-        let endIndex
-        this.wants.map((want, index) => {
-          if (want.id === this.want.id) {
-            startIndex = index
-            want.priority = index
-          }
-        })
-        this.wants.map((want, index) => {
-          if (want.id === overWant.id) endIndex = index
-        })
-        this.wants.splice(startIndex, 1)
-        this.want.category_id = overWant.category_id
-        this.wants.splice(endIndex, 0, this.want)
-        // console.log('test')
-      }
-    },
-    // wantを追加する
-    wantAdd(wantName, categoryId) {
-      let num = 0
-      const wants = []
-      // this.wantsの中からcategoryIdが同一のwantを抽出
-      this.wants.map((want) => {
-        if (want.category_id === categoryId) {
-          wants.push(want)
+    setWants() {
+      const wants = this.stoWants
+      const wants1 = []
+      const wants2 = []
+      wants.map((want) => {
+        if (want.category_id === 1) {
+          wants1.push(want)
+        } else {
+          wants2.push(want)
         }
       })
-      // wantsの中のpriorityの最大値を抽出
-      if (wants.length === 0) {
-        num = 0
+      wants1.map((want, index) => {
+        want.priority = index
+      })
+      wants2.map((want, index) => {
+        want.priority = index
+      })
+      this.wantsCategory1 = wants1
+      this.wantsCategory2 = wants2
+    },
+    openModal(item) {
+      this.form = item
+      console.log(this.form)
+      this.modal = true
+    },
+    closeModal() {
+      this.modal = false
+    },
+    wantUpdate() {
+      const wants1 = this.wantsCategory1
+      const wants2 = this.wantsCategory2
+      const wants = wants1.concat(wants2)
+
+      let want = wants.find((want) => want.id === this.form.id)
+      want = Object.assign(want, this.form)
+      this.modal = false
+      this.$store.dispatch('wants/wantUpdate', want)
+    },
+    wantDelete() {
+      console.log('test')
+      const wants = this.wantsCategory1.concat(this.wantsCategory2)
+      const want = wants.find((want) => want.id === this.form.id)
+      if (this.form.category_id === 1) {
+        const result1 = this.wantsCategory1.splice(want.priority, 1)
+        console.log(result1)
       } else {
-        wants.map((want) => {
-          if (want.priority >= num) {
-            num = want.priority
-          }
-        })
-        num += 1
+        const result2 = this.wantsCategory2.splice(want.priority, 1)
+        console.log(result2)
       }
+      console.log('test')
+      this.$store.dispatch('wants/wantDelete', want.id)
+      this.modal = false
+    },
+    async wantsUpdate() {
+      const wants1 = this.wantsCategory1
+      const wants2 = this.wantsCategory2
+      wants1.map((want, index) => {
+        want.priority = index
+        want.category_id = 1
+      })
+      wants2.map((want, index) => {
+        want.priority = index
+        want.category_id = 2
+      })
+      const wants = wants1.concat(wants2)
+      await this.$store.dispatch('wants/wantsUpdate', wants)
+    },
+    wantAdd(wantName, categoryId) {
+      let num = 0
+      const want = this.form
+
+      // 並び順を取得(priority)
+      if (categoryId === 1) {
+        if (this.wantsCategory1.length !== 0) {
+          this.wantsCategory1.map((want) => {
+            if (num < want.priority) {
+              num = want.priority
+            }
+          })
+          num += 1
+        }
+      } else if (categoryId === 2) {
+        if (this.wantsCategory2.length !== 0) {
+          this.wantsCategory2.map((want) => {
+            if (num < want.priority) {
+              num = want.priority
+            }
+          })
+          num += 1
+        }
+      } else {
+        console.log('error categoryId')
+      }
+
+      want.name = wantName
+      want.priority = num
+      want.category_id = categoryId
+
       this.$store.dispatch('wants/wantCreate', {
         name: wantName,
         categoryId,
         priority: num,
       })
-      location.reload()
-    },
-    // wantを更新(モーダルウィンドウ)
-    wantUpdate() {
-      let want = this.wants.find((want) => want.id === this.form.id)
-      want = Object.assign(want, this.form)
-      this.modal = false
-      this.$store.dispatch('wants/wantUpdate', want)
-    },
-    wantReUpdate(want) {
-      this.$store.dispatch('wants/wantUpdate', want)
-      location.reload()
-    },
-    // wantの削除(モーダルウィンドウ)
-    wantDelete() {
-      const want = this.wants.find((want) => want.id === this.form.id)
-      this.$store.dispatch('wants/wantDelete', want.id)
-      this.modal = false
-      location.reload()
-    },
-    // モーダルウィンドウを開く
-    openModal(category, want) {
-      this.category = category
-      Object.assign(this.form, want)
-      this.modal = true
-    },
-    // storeから得た値をdataに保存する
-    setWants() {
-      let wants = this.stoWants
-      const wants1 = []
-      const wants2 = []
-      wants.map((want) => {
-        if (want.category_id === 1) {
-          wants1.push(want)
-        } else {
-          wants2.push(want)
-        }
-      })
-      wants1.map((want, index) => {
-        want.priority = index
-      })
-      wants2.map((want, index) => {
-        want.priority = index
-      })
-      wants = wants1.concat(wants2)
-      this.wants = wants
-    },
-    async wantsUpdate() {
-      let wants = this.wants
-      const wants1 = []
-      const wants2 = []
-      wants.map((want) => {
-        if (want.category_id === 1) {
-          wants1.push(want)
-        } else {
-          wants2.push(want)
-        }
-      })
-      wants1.map((want, index) => {
-        want.priority = index
-      })
-      wants2.map((want, index) => {
-        want.priority = index
-      })
-      wants = wants1.concat(wants2)
-      await this.$store.dispatch('wants/wantsUpdate', wants)
-    },
-    done() {
-      // this.wantsUpdate()
-      // window.location.href = '/mypage'
+
+      if (categoryId === 1) {
+        this.wantsCategory1.push(want)
+      } else {
+        this.wantsCategory2.push(want)
+      }
     },
   },
 }
 </script>
-
 <style lang="scss">
-.main-container {
+.main-content {
+  min-height: 500px;
+  min-width: 85%;
   margin: 100px auto 0;
-  width: 85%;
-  min-height: 550px;
-  position: relative;
-  .modal_base {
-    display: flex;
-    justify-content: center;
-    padding: 0px;
-
-    .modal_overlay {
-      position: fixed;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      opacity: 0.5;
-    }
-    .modal_content {
-      margin-top: -10px;
-    }
-  }
-
-  .sab-conteiner {
-    text-align: center;
-    margin: 10px;
-    .done_btn {
-      margin-bottom: 20px;
-    }
-    .categories-container {
-      margin: 0 auto;
-      .categories {
-        text-align: left;
-        float: left;
-        margin: 2%;
-        background-color: #d6f2f0;
-        min-width: 200px;
-        min-height: 150px;
-        .category-name {
-          padding-left: 3%;
-          margin-bottom: 5%;
-        }
-        .category-wants {
-          margin: 2px;
-          padding: 1px 5px;
-          background-color: white;
-          border: solid 1px #2de9ed;
-        }
+  .category-container {
+    width: 50%;
+    float: left;
+    .category {
+      background-color: #d6f2f0;
+      text-align: center;
+      min-height: 250px;
+      .item {
+        max-width: 80%;
+        border: 1px solid #48ebef;
+        margin: 3px auto;
+        background-color: white;
+        cursor: pointer;
+      }
+      .add-btn {
+        margin-top: 10px;
       }
     }
   }

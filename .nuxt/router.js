@@ -9,6 +9,7 @@ const _20eb0f88 = () => interopDefault(import('../pages/infomations.vue' /* webp
 const _5dd35e60 = () => interopDefault(import('../pages/mypage.vue' /* webpackChunkName: "pages/mypage" */))
 const _039a6436 = () => interopDefault(import('../pages/users/index.vue' /* webpackChunkName: "pages/users/index" */))
 const _1a5c5cce = () => interopDefault(import('../pages/wants.vue' /* webpackChunkName: "pages/wants" */))
+const _15f18ec5 = () => interopDefault(import('../pages/wants1_1.vue' /* webpackChunkName: "pages/wants1_1" */))
 const _85a7d708 = () => interopDefault(import('../pages/daily/message.vue' /* webpackChunkName: "pages/daily/message" */))
 const _657bf166 = () => interopDefault(import('../pages/users/login.vue' /* webpackChunkName: "pages/users/login" */))
 const _2758cf64 = () => interopDefault(import('../pages/users/signup.vue' /* webpackChunkName: "pages/users/signup" */))
@@ -50,6 +51,10 @@ export const routerOptions = {
     path: "/wants",
     component: _1a5c5cce,
     name: "wants"
+  }, {
+    path: "/wants1_1",
+    component: _15f18ec5,
+    name: "wants1_1"
   }, {
     path: "/daily/message",
     component: _85a7d708,

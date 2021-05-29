@@ -35,6 +35,13 @@
     "_name": "_1a5c5cce"
   },
   {
+    "name": "wants1_1",
+    "path": "/wants1_1",
+    "component": "/Users/saito/git/greedy-for-frontend/pages/wants1_1.vue",
+    "chunkName": "pages/wants1_1",
+    "_name": "_15f18ec5"
+  },
+  {
     "name": "daily-message",
     "path": "/daily/message",
     "component": "/Users/saito/git/greedy-for-frontend/pages/daily/message.vue",
