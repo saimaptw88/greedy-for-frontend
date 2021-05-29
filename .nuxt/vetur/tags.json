@@ -1,8 +1,20 @@
 {
+  "Modal": {
+    "description": "Auto imported from components/app/Modal.vue"
+  },
+  "LazyModal": {
+    "description": "Auto imported from components/app/Modal.vue"
+  },
   "WantAdd": {
     "description": "Auto imported from components/app/WantAdd.vue"
   },
   "LazyWantAdd": {
     "description": "Auto imported from components/app/WantAdd.vue"
+  },
+  "Want2Add": {
+    "description": "Auto imported from components/app/want2Add.vue"
+  },
+  "LazyWant2Add": {
+    "description": "Auto imported from components/app/want2Add.vue"
   }
 }

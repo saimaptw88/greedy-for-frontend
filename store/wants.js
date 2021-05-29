@@ -67,10 +67,10 @@ export const actions = {
       console.log(res)
     }
   },
-  async wantDelete({ commit }, wantId) {
+  async wantDelete(_, wantId) {
     try {
-      const response = await this.$axios.delete(`/api/v1/want/${wantId}`)
-      commit('setWants', response.data)
+      console.log('test')
+      await this.$axios.delete(`/api/v1/want/${wantId}`)
     } catch (err) {
       const res = err.response
       console.log('delete error:')
