@@ -46,6 +46,14 @@ export default {
     '@nuxt/content',
     // https://auth.nuxtjs.org/
     '@nuxtjs/auth',
+    // https://github.com/nuxt-community/google-gtag-module?
+    [
+      '@nuxtjs/google-gtag',
+      {
+        id: 'G-TB2VLG02LP',
+        debug: true,
+      },
+    ],
   ],
 
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
