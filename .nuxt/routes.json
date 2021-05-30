@@ -21,11 +21,11 @@
     "_name": "_5dd35e60"
   },
   {
-    "name": "tryal",
-    "path": "/tryal",
-    "component": "/Users/saito/git/greedy-for-frontend/pages/tryal.vue",
-    "chunkName": "pages/tryal",
-    "_name": "_6898de11"
+    "name": "trial",
+    "path": "/trial",
+    "component": "/Users/saito/git/greedy-for-frontend/pages/trial.vue",
+    "chunkName": "pages/trial",
+    "_name": "_1a352a01"
   },
   {
     "name": "wants",

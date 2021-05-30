@@ -7,7 +7,7 @@ import scrollBehavior from './router.scrollBehavior.js'
 const _09f5aa10 = () => interopDefault(import('../pages/about.vue' /* webpackChunkName: "pages/about" */))
 const _20eb0f88 = () => interopDefault(import('../pages/infomations.vue' /* webpackChunkName: "pages/infomations" */))
 const _5dd35e60 = () => interopDefault(import('../pages/mypage.vue' /* webpackChunkName: "pages/mypage" */))
-const _6898de11 = () => interopDefault(import('../pages/tryal.vue' /* webpackChunkName: "pages/tryal" */))
+const _1a352a01 = () => interopDefault(import('../pages/trial.vue' /* webpackChunkName: "pages/trial" */))
 const _1a5c5cce = () => interopDefault(import('../pages/wants.vue' /* webpackChunkName: "pages/wants" */))
 const _15f18ec5 = () => interopDefault(import('../pages/wants1_1.vue' /* webpackChunkName: "pages/wants1_1" */))
 const _85a7d708 = () => interopDefault(import('../pages/daily/message.vue' /* webpackChunkName: "pages/daily/message" */))
@@ -44,9 +44,9 @@ export const routerOptions = {
     component: _5dd35e60,
     name: "mypage"
   }, {
-    path: "/tryal",
-    component: _6898de11,
-    name: "tryal"
+    path: "/trial",
+    component: _1a352a01,
+    name: "trial"
   }, {
     path: "/wants",
     component: _1a5c5cce,
