@@ -34,7 +34,7 @@
             >これがこのアプリの存在意義です。
           </div>
         </v-card-text>
-        <v-btn @click="login" class="start-btn" color="#e196e6">
+        <v-btn @click="login" class="start-btn white--text" color="#e196e6">
           トライアルページへ移動</v-btn
         >
       </div>
