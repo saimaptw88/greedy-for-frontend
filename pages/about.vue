@@ -12,8 +12,8 @@
       <p>
         エンジニアになりたい人、プログラミングに興味がある人に向けてブログも書いてます。
       </p>
-      <p>ブログ：https://saimablog.net/</p>
-      <p>Qiita：https://qiita.com/saima88</p>
+      <a href="https://saimablog.net/">ブログ</a>
+      <a href="https://qiita.com/saima88">Qiita：技術情報</a>
     </v-card-text>
   </v-card>
 </template>
