@@ -104,6 +104,11 @@ export default {
         },
         {
           icon: 'mdi-domain',
+          title: 'trial',
+          to: '/trial',
+        },
+        {
+          icon: 'mdi-domain',
           title: 'infomations',
           to: '/infomations',
         },

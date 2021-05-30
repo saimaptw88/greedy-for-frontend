@@ -5,6 +5,12 @@
   "LazyModal": {
     "description": "Auto imported from components/app/Modal.vue"
   },
+  "ModalForTryal": {
+    "description": "Auto imported from components/app/ModalForTryal.vue"
+  },
+  "LazyModalForTryal": {
+    "description": "Auto imported from components/app/ModalForTryal.vue"
+  },
   "WantAdd": {
     "description": "Auto imported from components/app/WantAdd.vue"
   },
