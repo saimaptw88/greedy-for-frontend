@@ -69,8 +69,28 @@
           </Modal>
           <want2Add :categoryId="2" @wantAdded="wantAdd"></want2Add>
         </div>
+        <modal-for-tryal v-if="modalForTryal" @close-modal="closeModalForTryal">
+          <v-card-title>やり遂げたい目的</v-card-title>
+          <v-card-text
+            >どうしても達成したいあなたが最も集中するべき目的です。</v-card-text
+          >
+          <v-text-field solo v-model="wantsCategory1[0].name"></v-text-field>
+          <v-card-title>目的を達成したい理由</v-card-title>
+          <v-card-text
+            >この目的を達成した時のメリットや気持ちなどを書いてモチベーションを高めましょう。</v-card-text
+          >
+          <v-textarea solo label="目的を達成したい理由"></v-textarea>
+          <v-btn color="primary" to="/users/signup">始める</v-btn>
+          <v-btn @click="modalForTryal = false">閉じる</v-btn>
+        </modal-for-tryal>
       </v-col>
-      <v-btn bottom color="primary" width="60%" class="done-btn" to="/mypage">
+      <v-btn
+        bottom
+        color="primary"
+        width="60%"
+        class="done-btn"
+        @click="tryalMypage"
+      >
         完了</v-btn
       >
     </v-card>
@@ -79,64 +99,31 @@
 <script>
 import draggable from 'vuedraggable'
 import Modal from '@/components/app/Modal'
+import ModalForTryal from '@/components/app/ModalForTryal'
 import want2Add from '@/components/app/want2Add'
 export default {
   components: {
     draggable,
     Modal,
+    ModalForTryal,
     want2Add,
   },
   data() {
     return {
       modal: false,
+      modalForTryal: false,
       form: {
         id: '',
         category_id: '',
         name: '',
         reachability: '',
         priority: '',
-        user: '',
       },
       wantsCategory1: [],
       wantsCategory2: [],
     }
   },
-  computed: {
-    stoWants() {
-      return this.$store.state.wants.stoWants
-    },
-  },
-  async created() {
-    await this.$store.dispatch('wants/getWants')
-    this.setWants()
-  },
-  async beforeUpdate() {
-    await this.wantsUpdate()
-  },
-  async beforeDestroy() {
-    await this.wantsUpdate()
-  },
   methods: {
-    setWants() {
-      const wants = this.stoWants
-      const wants1 = []
-      const wants2 = []
-      wants.map((want) => {
-        if (want.category_id === 1) {
-          wants1.push(want)
-        } else {
-          wants2.push(want)
-        }
-      })
-      wants1.map((want, index) => {
-        want.priority = index
-      })
-      wants2.map((want, index) => {
-        want.priority = index
-      })
-      this.wantsCategory1 = wants1
-      this.wantsCategory2 = wants2
-    },
     openModal(item) {
       this.form = item
       console.log(this.form)
@@ -153,7 +140,7 @@ export default {
       let want = wants.find((want) => want.id === this.form.id)
       want = Object.assign(want, this.form)
       this.modal = false
-      this.$store.dispatch('wants/wantUpdate', want)
+      console.log(want)
     },
     wantDelete() {
       console.log('test')
@@ -166,25 +153,9 @@ export default {
         const result2 = this.wantsCategory2.splice(want.priority, 1)
         console.log(result2)
       }
-      console.log('test')
-      this.$store.dispatch('wants/wantDelete', want.id)
       this.modal = false
     },
-    async wantsUpdate() {
-      const wants1 = this.wantsCategory1
-      const wants2 = this.wantsCategory2
-      wants1.map((want, index) => {
-        want.priority = index
-        want.category_id = 1
-      })
-      wants2.map((want, index) => {
-        want.priority = index
-        want.category_id = 2
-      })
-      const wants = wants1.concat(wants2)
-      await this.$store.dispatch('wants/wantsUpdate', wants)
-    },
-    async wantAdd(wantName, categoryId) {
+    wantAdd(wantName, categoryId) {
       let num = 0
       const want = {
         id: '',
@@ -217,15 +188,10 @@ export default {
         console.log('error categoryId')
       }
 
+      console.log('test')
       want.name = wantName
       want.priority = num
       want.category_id = categoryId
-
-      await this.$store.dispatch('wants/wantCreate', {
-        name: wantName,
-        categoryId,
-        priority: num,
-      })
 
       if (categoryId === 1) {
         this.wantsCategory1.push(want)
@@ -233,6 +199,13 @@ export default {
         this.wantsCategory2.push(want)
       }
       this.form = ''
+    },
+    tryalMypage() {
+      if (this.wantsCategory1.length !== 0) {
+        this.modalForTryal = true
+      } else {
+        alert('やり遂げたいも目的を追加してください')
+      }
     },
   },
 }
