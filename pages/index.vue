@@ -34,6 +34,9 @@
             >これがこのアプリの存在意義です。
           </div>
         </v-card-text>
+        <v-btn @click="login" class="start-btn" color="#e196e6">
+          トライアルページへ移動</v-btn
+        >
       </div>
       <img src="/images/usageImg.png" class="midle-img" />
       <div class="usage">
@@ -50,12 +53,12 @@
         </v-card-text>
       </div>
       <v-btn
-        class="white--text"
+        class="start-btn white--text"
         bottom
-        color="#00d8db"
+        color="#e196e6"
         id="start-btn"
         @click="login"
-        >Start</v-btn
+        >トライアルページへ移動</v-btn
       >
     </v-card>
   </div>
@@ -72,7 +75,7 @@ export default {
       if (this.stoLogin) {
         window.location.href = '/wants'
       } else {
-        window.location.href = '/users/login'
+        window.location.href = '/trial'
       }
     },
   },
@@ -96,7 +99,7 @@ export default {
       }
     }
     .midle-img {
-      margin: 0 auto;
+      margin: 30px auto 0;
       width: 80%;
     }
     .usage {
